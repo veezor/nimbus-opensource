@@ -1,0 +1,8 @@
+#!/bin/bash
+
+/usr/sbin/userdel nimbus;
+/usr/sbin/update-rc.d -f nimbusmanager remove;
+/usr/sbin/update-rc.d -f nimbus remove;
+/usr/sbin/update-rc.d -f nimbusclient remove;
+/etc/init.d/nimbusmanager stop || echo;
+/etc/init.d/nimbus stop || echo;

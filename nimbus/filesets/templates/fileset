@@ -1,0 +1,12 @@
+FileSet {
+    Name = "{{name}}"
+        Include {
+            Options{
+                signature = "MD5"
+                compression = "GZIP"
+            }
+			{% for file in files %}
+                File = "{{file}}"
+	        {%endfor%}
+        }
+}

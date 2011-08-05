@@ -1,0 +1,139 @@
+{% extends "base.html" %}
+
+{% block headtags %}
+<script type="text/javascript" src="/media/jquery-ui.js"></script>
+<link href="/media/jquery-ui.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="/media/js/procedures.js"></script>
+<link rel="stylesheet" type="text/css" href="/media/css/procedures.css" />
+{% endblock %}
+
+{% block page %}
+
+<div class="block">
+	<div class="block_head">
+		<div class="bheadl"></div>
+		<div class="bheadr"></div>
+		<h2>{{title}}</h2>
+	</div>
+    <div class="block_content">
+		<h2 class="floatleft">Conjuntos de arquivos</h2>
+		&nbsp;&nbsp;<a href="/filesets/add/" class="css3button positive edit-fileset" id="fileset_new">Adicionar</a>
+		<select class="computer-fileset" id="select_fileset_new">
+			<option value="">a partir do computador:</option>
+            {% for computer in computers %}
+            <option value="{{ computer.id }}">{{ computer.name }}</option>
+            {% endfor %}
+        </select>
+		
+		<div class="clear"></div><hr />
+		<!-- real env for filesets -->
+		<div class="procedure">
+            {% for fileset in filesets %}
+			<div class="fileset">
+                <div class="title" id="fileset_{{ fileset.id }}">
+                    <div class="title-left">
+    			        <span class="name">{{ fileset.name }}</span>
+                    </div>
+                    <div class="title-right">
+						<select class="computer-fileset" id="select_fileset_{{fileset.id}}">
+							<option value="">Escolha um computador:</option>
+                            {% for computer in computers %}
+                            <option value="{{ computer.id }}">{{ computer.name }}</option>
+                            {% endfor %}
+                        </select>
+                        <a class="css3button positive edit-fileset" id="fileset_{{fileset.id}}" href="/filesets/{{ fileset.id }}/edit/"><span>Editar</span></a>
+                        <a class="css3button negative" href="/filesets/delete/{{fileset.id}}"><span>Excluir</span></a>
+                    </div>
+                    <div class="clear"></div>
+                </div><!-- .title -->
+                <div class="body">
+                    <div class="left">
+                        <h3>Utilizado por:</h3>
+                        <table cellpadding="0" cellspacing="0">
+                            <thead>
+                                <tr><th>Procedimento</th><th>Computador</th></tr>
+                            </thead>
+                            <tbody>
+                                {% for procedure in fileset.procedures.all %}
+                                <tr><td>{{procedure.name}}</td><td>{{procedure.computer}}</td></tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div><!-- .left -->
+                    <div class="right">
+                        <h3 class="floatleft">Lista de arquivos</h3>
+                        <div class="clear"></div>
+                        <div class="list">
+                        <ul>
+                            {% for file in fileset.files.all %}
+                            <li>{{file.path}}</li>
+                            {% endfor %}
+                        </ul>
+                        </div>
+                    </div><!-- .right -->
+                    <div class="clear"></div>
+                </div><!-- .body -->
+			</div><!-- .fileset -->
+			<hr />
+			{% endfor %}
+		</div><!-- .procedure -->
+        
+        <h2 class="floatleft">Agendamentos</h2>&nbsp;<a href="/schedules/add/" class="css3button positive edit-schedule"><span>Adicionar</span></a>
+		<div class="clear"></div><hr />
+        <!-- real env for schedules -->
+		<div class="schedule">
+            {% for schedule in schedules %}
+			<div class="fileset">
+                <div class="title">
+                    <div class="title-left">
+    			        <span class="name">{{ schedule.name }}</span>
+                    </div>
+                    <div class="title-right">
+                        <a class="css3button positive edit-schedule" href="/schedules/{{schedule.id}}/edit/"><span>Editar</span></a>
+                        <a class="css3button negative" href="/schedules/delete/{{schedule.id}}"><span>Excluir</span></a>
+                    </div>
+                    <div class="clear"></div>
+                </div><!-- .title -->
+                <div class="body">
+                    <div class="left">
+                        <h3>Utilizado por:</h3>
+                        <table cellpadding="0" cellspacing="0">
+                            <thead>
+                                <tr><th>Procedimento</th><th>Computador</th></tr>
+                            </thead>
+                            <tbody>
+            					{% for procedure in schedule.procedures.all %}
+            					<tr><td>{{procedure.name}}</td><td>{{procedure.computer}}</td></tr>
+            					{% endfor %}
+            				</tbody>
+                        </table>
+                    </div><!-- .left -->
+                    <div class="right">
+                        <h3 class="floatleft">Agendamentos</h3>
+                        <div class="clear"></div>
+						<div class="list">
+                        <table cellpadding="0" cellspacing="0">
+                            <thead>
+                                <tr><th>Tipo</th><th>Frequência</th><th>Dia</th><th>Hora</th></tr>
+                            </thead>
+                            <tbody>
+            					{% for run in schedule.runs.all %}
+								<tr><th>{{run.level}}</th><th>{{run.kind.name_pt}}</th><th>{{run.day_string}}</th><th>{{run.hour}}:{{run.minute}}</th></tr>
+            					{% endfor %}
+            				</tbody>
+                        </table>
+						</div>
+                    </div><!-- .right -->
+                    <div class="clear"></div>
+                </div><!-- .body -->
+			</div><!-- .fileset -->
+			<hr />
+            {% endfor %}
+		</div><!-- .schedule -->
+    </div>
+    <div class="bendl"></div>
+	<div class="bendr"></div>
+
+</div>
+
+{% endblock %}

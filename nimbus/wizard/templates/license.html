@@ -1,0 +1,22 @@
+{% extends "base_wizard.html" %}
+
+{% block headtags %}
+
+{% endblock %}
+
+{% block content %}
+    <form action="" method="post" id="{{page_name}}_form">
+        
+        {% include "base_license.html" %}
+        
+        <p class="input_submit">
+            {% if previous %}
+            <a href="{{ previous }}" class="css3button big"><span>Anterior</span></a> &nbsp;
+            {% endif %}
+            <button type="submit" class="css3button big positive floatright" value="Concordo">Concordo</button>
+        </p>
+               
+        <input type="hidden" name="next" value="{{ next }}" />
+
+    </form>
+{% endblock %}

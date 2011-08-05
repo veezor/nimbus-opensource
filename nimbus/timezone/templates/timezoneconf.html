@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block headtags %}
+<script type="text/javascript" src="/media/js/timezone.js"></script>
+{% endblock %}
+
+
+{% block page %}
+
+<div class="block">
+
+	<div class="block_head">
+		<div class="bheadl"></div>
+		<div class="bheadr"></div>
+		<h2>Configuração de Hora</h2>
+	</div>		<!-- .block_head ends -->
+
+    <div class="block_content">
+    
+        <form method="post" action="/timezone/config/">
+            {% include "form.html" %}
+<!-- 			<input type="hidden" value="{% url nimbus.timezone.views.area_request %}" id="area_request" name="area"/> -->
+            <p><button type="submit" class="css3button big positive" value="Atualizar">Atualizar</button></p>
+        </form>
+    
+    </div>
+    
+    <div class="bendl"></div>
+	<div class="bendr"></div>
+
+</div>
+
+{% endblock %}

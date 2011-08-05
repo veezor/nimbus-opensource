@@ -1,0 +1,6 @@
+Director {
+    Address = {{ director_address }}
+    Name = {{ director_name }}
+    Password = "{{director_password}}"
+    DIRPort = {{director_port}}
+}

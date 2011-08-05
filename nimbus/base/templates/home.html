@@ -1,0 +1,132 @@
+
+{% extends 'base.html' %}
+
+{% block headtags %}
+<link rel="stylesheet" type="text/css" href="/media/lib/css/jquery.jqplot.css" />
+
+<script type="text/javascript" src="/media/lib/js/jquery.jqplot.js"></script>
+<script type="text/javascript" src="/media/lib/js/jqplotplugins/jqplot.barRenderer.js"></script>
+<script type="text/javascript" src="/media/lib/js/jqplotplugins/jqplot.pieRenderer.js"></script>
+<script type="text/javascript" src="/media/lib/js/jqplotplugins/jqplot.categoryAxisRenderer.js"></script>
+<script type="text/javascript" src="/media/lib/js/jqplotplugins/jqplot.highlighter.min.js"></script>
+<script type="text/javascript" src="/media/lib/js/jqplotplugins/jqplot.pointLabels.js"></script>
+<script type="text/javascript" src="/media/lib/js/jqplotplugins/jqplot.cursor.min.js"></script>
+<script type="text/javascript" src="/media/js/home.js"></script>
+<!-- this is here due stat_block.html -->
+<script type="text/javascript" src="/media/js/procedures.js"></script>
+<link rel="stylesheet" type="text/css" href="/media/css/procedures.css" />
+{% endblock %}
+
+{% block content %}
+
+    	<div class="block">
+    		<div class="block_head">
+    			<div class="bheadl"></div>
+    			<div class="bheadr"></div>
+
+    			<h2>Backups</h2>
+
+                <!-- <ul class="tabs">
+                    <li><a href="#backup-bytes">Mega bytes</a></li>
+                    <li><a href="#backup-files">Quantidade de Arquivos</a></li>
+                </ul> -->
+            </div>
+
+		    <!-- <div class="block_content tab_content" id="backup-bytes"> -->
+		    <div class="block_content" id="backup-bytes">
+		        {% with table1 as table %}
+			        {% include "table_chart.html" %}
+			    {% endwith %}
+		    </div>
+    		<!-- <div class="block_content tab_content" id="backup-files"> -->
+    		<div class="block_content" id="backup-files">
+			    {% with table2 as table %}
+			        {% include "table_chart.html" %}
+			    {% endwith %}
+    		</div>
+
+
+
+    		<div class="bendl"></div>
+    		<div class="bendr"></div>
+    	</div>		<!-- .block ends -->
+
+
+	    <div class="block">
+
+    		<div class="block_head">
+    			<div class="bheadl"></div>
+    			<div class="bheadr"></div>
+
+    			<h2>Sistema e servidor</h2>
+    		</div>		<!-- .block_head ends -->
+
+    		<div class="block_content">
+                <div class="right" id="disc-use">
+                {% if table3 %}
+    			    {% with table3 as table %}
+    			        {% include "table_chart.html" %}
+    			    {% endwith %}
+                {% else %}
+                    <h2>Ocupação em disco</h2>
+                    <p><em>Sem uso do disco</em></p>
+                {% endif %}
+                </div>
+       		    <div class="clear"></div>
+    		    <p></p>
+
+    		</div>		<!-- .block_content ends -->
+    		<div class="block_content">
+                <div id="memory-use">
+                    <div class="left memory">
+                        <h4>Uso da Memória</h4>
+                        {% with table4.lines.Ocupado.0 as value %}
+        			        {% include "bar_chart.html" %}
+        			    {% endwith %}
+    			    </div>
+    			    <div class="right cpu">
+                        <h4>Uso da CPU</h4>
+                        {% with table5.lines.Ocupado.0 as value %}
+        			        {% include "bar_chart.html" %}
+        			    {% endwith %}
+                    </div>
+                </div>
+                <div class="clear"></div>
+            </div>		<!-- .block_content ends -->
+
+    		<div class="bendl"></div>
+    		<div class="bendr"></div>
+    	</div>		<!-- .block ends -->
+
+
+
+
+        <div class="block">
+
+    		<div class="block_head">
+    			<div class="bheadl"></div>
+    			<div class="bheadr"></div>
+
+    			<h2 class="floatleft">Procedimentos</h2>&nbsp;&nbsp;
+    			<a href="/procedures/history" class="css3button positive">Listar todos os procedimentos</a>
+
+    		</div>		<!-- .block_head ends -->
+
+            <div class="block_content">
+		    {% with backups_com_falhas as item %}
+    		    <div class="stat_block">
+                {% include "stat_block.html" %}
+                </div>
+    		{% endwith %}
+    		</div>
+
+    		<div class="bendl"></div>
+    		<div class="bendr"></div>
+    	</div>		<!-- .block ends -->
+
+
+
+
+
+
+{% endblock %}

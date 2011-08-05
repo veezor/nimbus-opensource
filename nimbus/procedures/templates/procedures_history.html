@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block headtags %}
+<script type="text/javascript" src="/media/js/procedures.js"></script>
+<link rel="stylesheet" type="text/css" href="/media/css/procedures.css" />
+
+{% endblock %}
+
+{% block page %}
+
+<div class="block">
+	<div class="block_head">
+		<div class="bheadl"></div>
+		<div class="bheadr"></div>
+		<h2>{{title}}</h2>
+	</div>		<!-- .block_head ends -->
+
+    <div class="block_content">
+    {% with backups_com_falhas as item %}
+	    <div class="stat_block">
+        {% include "stat_block.html" %}
+        </div>
+        <div class="pagination">
+            <span class="step-links">
+                {% if jobs.has_previous %}
+                    <a href="?page=1">&lt;&lt; primeira</a>
+                    <a href="?page={{ jobs.previous_page_number }}">&lt; anterior</a>
+                {% endif %}
+        
+                <span class="current">
+                    Página {{ jobs.number }} de {{ jobs.paginator.num_pages }}.
+                </span>
+        
+                {% if jobs.has_next %}
+                    <a href="?page={{ jobs.next_page_number }}">próxima &gt;</a>
+                    <a href="?page={{ jobs.paginator.num_pages }}">última &gt;&gt;</a>
+                {% endif %}
+            </span>
+        </div>
+	{% endwith %}
+	</div>
+
+	<div class="bendl"></div>
+	<div class="bendr"></div>
+</div>		<!-- .block ends -->
+    
+
+
+{% endblock %}

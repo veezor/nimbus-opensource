@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block page %}
+
+<div class="block">
+
+	<div class="block_head">
+		<div class="bheadl"></div>
+		<div class="bheadr"></div>
+		<h2>Configuração de Rede</h2>
+	</div>		<!-- .block_head ends -->
+
+    <div class="block_content">
+
+        <form method="post" action="{% url nimbus.network.views.network_conf %}" id="network_config">
+            {% include "form.html" %}
+            <p><button type="submit" class="css3button big positive" value="Atualizar">Atualizar</button></p>
+        </form>
+    
+    </div>
+    
+    <div class="bendl"></div>
+	<div class="bendr"></div>
+
+</div>
+
+{% endblock %}

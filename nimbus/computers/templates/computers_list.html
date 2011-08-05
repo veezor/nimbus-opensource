@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+
+{% block headtags %}
+<link rel="stylesheet" type="text/css" href="/media/css/computers.css" />
+<script type="text/javascript" src="/media/jquery.cookie.js"></script>
+<script type="text/javascript" src="/media/js/computers.js"></script>
+{% endblock %}
+
+{% block page %}
+
+<div class="block">
+
+	<div class="block_head">
+		<div class="bheadl"></div>
+		<div class="bheadr"></div>
+		<h2>{{title}}</h2>
+	</div>		<!-- .block_head ends -->
+
+    <div class="block_content">
+        <div class="left"><a href="/computers/add" class="css3button positive">Adicionar computador</a></div>
+		
+		<div id="computers-filter">
+			<form action="/computers/list" method="get">
+			<select name="group"   id="computers-group">
+				<option value="">Filtrar por Grupo</option>
+				{% for group in groups %}
+					<option value="{{group.name}}">{{group.name}}</option>
+				{% endfor%}
+			</select>
+			<button type="submit" class="css3button positive" value="Filtrar">Filtrar</button>
+			</form>
+		</div>
+		
+        <div id="computers">
+        {% for comp in computers %}
+            {% ifchanged comp.groups.all %}
+            {% endifchanged %}
+            <div class="computer {% if not comp.active %}desativado{% endif %}" >
+                <div class="left">
+                    <div class="title">
+                        <img src="/media/icons/computer.png" alt="" />
+                        <h3 class="name"><a href="/computers/{{ comp.id }}/view">{{comp.name}}</a></h3>
+                        <small class="ip">{{comp.address}} - {{comp.operation_system|title}} </small> <br/>
+                        <small class="ip">Grupos: {% for g in comp.groups.all %} {{g.name}} {% endfor %}</small>
+                    </div>
+                    <p class="description">{{comp.description}}</p>
+                    <p class="options">
+                        <a href="/computers/{{comp.id}}/edit/" class="css3button positive pill">Editar</a>
+                        <a href="/computers/{{comp.id}}/delete/" class="css3button negative pill">Remover</a>
+                    </p>
+                </div>
+                <div class="right">
+                    <div class="floatright">
+                        {% if not comp.active %}
+                        <form action="/computers/{{comp.id}}/activate/" method="post" class="floatright">
+                            <input type="submit" class="submit tiny" value="Ativar" />
+                        </form>
+                        {% endif %}
+                        {% if comp.procedure_set.count %}
+                        <form action="/restore/{{comp.id}}/view/" method="post" class="floatright">
+                            <button type="submit" class="css3button positive" value="Restaurar">Restaurar</button>
+                        </form>
+                        {% endif %}
+                        <a href="/procedures/add/?comp_id={{ comp.id }}" class="floatright css3button positive">Criar Backup</a>
+                        <a href="/computers/{{comp.id}}/configure/" class="css3button positive">Reconfigurar</a>
+                        
+                    </div>
+                    {% if not comp.procedure_set.count %}
+                        <p>Não existem procedimentos para este computador.</p>
+                    {% else %}
+                        <h4 class="floatleft">ARQUIVOS PARA BACKUP</h4>
+                        <div class="clear"></div>
+                        <div class="files">
+                            {% for proc in comp.procedure_set.all %}
+                            <div class="file">
+                                <div class="title">
+                                    <a href="#" class="toggle" ref="fileset_detail">
+                                        <img src="/media/icons/folder.png" alt=""/>
+                                        <h4 class="name">{{proc.fileset.name}}</h4>
+                                        <small class="ip">{% for file in proc.fileset.files.all|slice:":3" %}{{file.path}} - {% endfor %}</small>
+                                    </a>
+                                </div>
+                                <div class="fileset_detail">
+                                    <br/>
+                                    Local de armazenamento: <strong><a href="/storages/{{proc.storage.id}}/view"><span title="Endereço: {{proc.storage.address}} - {{proc.storage.description|slice:":25"}}...">{{proc.storage.name}}</span></a></strong><br/>
+                                    Agendamento: <strong>{{proc.schedule}}</strong> <small>(<a href="/procedures/{{proc.id}}/edit">editar</a>)</small><br/>
+                                    Arquivos: <small>(<a href="/procedures/{{proc.id}}/edit/">editar</a>)</small>
+
+                                    <ul>
+                                        {% for file in proc.fileset.files.all %}
+                                        <li><strong>{{file.path}}</strong></li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                                <div class="clear"></div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="clear"></div>
+            </div>
+        {% empty %}
+            <p>Não existem computadores adicionados.</p>
+        {% endfor %}
+        </div>
+    
+    </div>
+    
+    <div class="bendl"></div>
+	<div class="bendr"></div>
+
+</div>
+
+{% endblock %}

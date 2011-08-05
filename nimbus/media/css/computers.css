@@ -1,0 +1,102 @@
+.computer {
+    padding: 20px;
+    -moz-border-radius: 5px;
+    background: #EEE;
+    margin-bottom: 20px
+}
+
+.computer.desativado {
+    background: #FFE5EB !important;
+    border: 2px solid #e7696d;
+    -moz-border-radius: 5px; 
+}
+
+.computer .submit.tiny {
+    float: right;
+    font-size: 11px;
+    margin-right: 0;
+    margin-left: 5px;
+}
+
+.computer .left {
+    float: left;
+    width: 250px;
+}
+
+.computer .right {
+    float: right;
+    width: 600px;
+}
+
+.computer img {
+    float: left;
+    height: 32px;
+    padding-right: 10px;
+}
+
+.computer h3 {
+    margin: 0 0 -5px 0;
+    padding: 0;
+}
+
+.computer .description {
+    font-size: 10px;
+    margin-top: 10px;
+    line-height: 1.4em;
+}
+
+.computer .options {
+    font-size: 10px;
+    margin: 0px; padding: 0;
+    line-height: 1.4em;
+}
+
+.computer .files {
+    padding: 10px;
+    -moz-border-radius: 5px;
+    background: #FFF;
+    margin-bottom: 20px;
+    border: 1px solid #CCC;
+}
+
+.file img {
+    float: left;
+    height: 32px;
+    padding-right: 10px;
+}
+
+.file .name {
+    margin: 0 0 -5px 0;
+    padding: 0;
+}
+
+.fileset_detail {
+    display: none;
+}
+
+#computers-filter {
+    margin: 0 0 15px;
+    float: right;
+}
+
+#computers { clear: both; }
+
+#add_group {
+    margin-top: -10px;
+    float: left;
+}
+
+.add_group {
+    clear: both;
+    padding: 10px;
+    margin: 15px 0 10px;
+    background: #FFF2A7;
+    display: none;
+}
+.submit{
+    padding: 0;
+    margin: 0 0 2px 0;
+}
+.tiny{
+    padding: 2px;
+}

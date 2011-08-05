@@ -1,0 +1,59 @@
+{% extends "base_wizard.html" %}
+
+{% block headtags %}
+<script type="text/javascript">
+
+    $(document).ready(function() {
+        $("select#id_country").bind("change", getAreaChoices);
+
+    });
+
+    function getAreaChoices() {
+        $.ajax({
+            type: "POST",
+            url: "{% url nimbus.timezone.views.area_request %}",
+            dataType: "json",
+            data: {country: $('[name=country]').val()},
+            success: function(data, textStatus){
+                $("select#id_area").empty();
+                $.each(data, function(i, item){
+                    $("select#id_area").append(
+                        '<option value="'+item+'" selected="selected">'+item+'</option>'
+                    );
+                });
+                $("select#id_area").change();
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("Status: "+textStatus+".");
+                this; // the options for this ajax request
+            }
+        });
+    }
+
+</script>
+{% endblock %}
+
+{% block content %}
+
+    <form action="" method="post" id="{{page_name}}_form">
+
+        {% include "form.html" %}
+
+        {% if recovery %}
+        <a href="{{ recovery }}" class="submit"><span>Iniciar</span></a> &nbsp;
+        {% endif %}
+
+        <p class="input_submit">
+            {% if previous %}
+            <a href="{{ previous }}" class="css3button positive big floatleft">Anterior</a> &nbsp;
+            {% endif %}
+
+            <button type="submit" class="css3button big positive floatright" value="Próximo">Próximo</button>
+        </p>
+
+        <input type="hidden" name="next" value="{{ next }}" />
+
+    </form>
+
+
+{% endblock %}

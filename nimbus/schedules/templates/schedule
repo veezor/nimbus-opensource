@@ -1,0 +1,6 @@
+Schedule {
+    Name = "{{name}}"
+    {%for run in runs%}
+    {{run.bacula_config}}
+    {%endfor%}
+}

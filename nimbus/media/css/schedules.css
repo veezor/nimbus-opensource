@@ -1,0 +1,19 @@
+#error-box {
+    float: right; padding: 10px 20px 10px 0; clear: both;
+}
+
+.dia {
+    display: block; width: 70px; float: left;
+}
+
+.block form input.text.mascara_hora {
+    width: 65px;
+}
+
+.block form input.text.mascara_minuto {
+    width: 45px;
+}
+
+small { line-height: 1.2em; }
+
+.schedule_activate{float: left; margin-right: 4px;}

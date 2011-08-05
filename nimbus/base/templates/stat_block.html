@@ -1,0 +1,49 @@
+{% comment %}
+Tipos possíveis: ok, warn, error
+{% endcomment %}
+<h2>Histórico</h2>
+<hr />
+<div class="content_block cols_{{item|length}}" id="accordion">
+	{% for job in last_jobs %}
+	<!-- <div class="inner_message {% cycle "odd" "even" %}" title="{{ job_line.tooltip }}"><img src="/media/icons/{{job_line.type}}.png" /> {% if job_line.date %}<small>{{job_line.date}}</small> -{% endif %} {{job_line.label}} {% if job_line.message %}<small>({{job_line.message}})</small>{% endif %}</div> -->
+<!-- 	<div id="job_{{job.jobid}}" class="job_line minus"> -->
+    <h3>
+		<span class="status_{{job.general_status}}">Status {{job.human_general_status}}</span>
+        {{job.start_time}}: Backup {{job.procedure.name}} de '{{job.procedure.computer.name}}'
+        <div class="clear"></div>
+	</h3>
+	<div id="job_{{job.jobid}}_details">
+	   <table cellpadding="0" cellspacing="0">
+	   <tbody>
+            <tr><td>Procedimento:</td>
+            {% if job.procedure %}
+            <td>{{job.procedure}}</td>
+            {% else %}
+            <td>Este procedimento não existe mais.</td>
+            {% endif %}
+            </tr>
+            <tr>
+            {% if job.procedure.computer %}
+            <td>Computador:</td><td>{{job.procedure.computer.name}} ({{job.procedure.computer.address}})</td>
+            {% else %}
+            <td>Computador:</td> <td>Computador não encontrado</td>
+            {% endif %}</tr>
+            <tr><td>Tipo de backup:</td><td>{{job.backup_level}}</td></tr>
+            <tr><td>Agendado para:</td><td>{{job.schedule_time}}</td></tr>
+            <tr><td>Inicio: </td><td>{{job.start_time}}</td></tr>
+            {% if job.end_time %}
+            <tr><td>Término:</td><td>{{job.end_time}}</td></tr>
+            <tr><td>Duração:</td><td>{{job.duration}}</td></tr>
+            {% else %}
+            <tr><td>Término:</td><td>O procedimento ainda não foi concluído</td></tr>
+            <tr><td>Duração:</td><td>O procedimento ainda não foi concluído</td></tr>
+            {% endif %}
+            <tr><td>Arquivos copiados:</td><td>{{job.jobfiles}} ({{job.human_readable_size.size}} {{job.human_readable_size.unit}})</td></tr>
+            
+            <tr><td>Status:</td><td>{{job.status_message}}</td></tr>
+            <tr><td>Erros:</td><td>{{job.joberrors}}</td></tr>
+		</table>
+		<hr />
+	</div>
+	{% endfor %}
+</div>

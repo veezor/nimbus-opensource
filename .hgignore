@@ -1,0 +1,12 @@
+# use glob syntax.
+syntax: glob
+
+*.pyc
+*~
+*.swp
+django/backup_corporativo/settings.py
+django/binary
+webservices/manager/binary
+deb/var/nimbus/custom
+deb/etc/
+*.deb

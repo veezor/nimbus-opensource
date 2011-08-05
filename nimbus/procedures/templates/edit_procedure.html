@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block headtags %}
+<script type="text/javascript" src="/media/js/procedures.js"></script>
+<script type="text/javascript" src="/media/js/filesets.js"></script>
+<script type="text/javascript" src="/media/js/schedules.js"></script>
+
+<link href="/media/css/procedures.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+	$(document).ready(function(){
+        $("#slider").slider({ value: $("#id_procedure-pool_retention_time").val() });
+		{% if fileset %}
+			{% if not fileset.is_model %}
+		FILESET_ID = '{{fileset.id}}';		
+		set_fileset();
+			{% endif %}
+		{% endif %}
+		{% if schedule %}
+			{% if not schedule.is_model %}
+		SCHEDULE_ID = '{{schedule.id}}';
+		set_schedule();
+			{% endif %}
+		{% endif %}
+	});
+</script>
+
+{% endblock %}
+
+{% block page %}
+
+<div class="block">
+	<div class="block_head">
+		<div class="bheadl"></div>
+		<div class="bheadr"></div>
+		<h2>{{title}}</h2>
+	</div>
+	<div class="block_content">
+		<form action="" method="post">
+			{{ form.non_field_errors }}
+			{% for field in form.visible_fields %}
+				{% if field.errors %}
+			<ul class="errorlist">
+				<li>{{ field.errors }}</li>
+			</ul>
+				{% endif %}
+			<p>
+				{% if field.label == 'Agendamento' %}
+				<label>{{ field.label }}:</label><br />
+				<a href="/schedules/add/" id="schedule_button" class="css3button positive add_schedule_button">Criar um agendamento</a>
+				<span id="discard_schedule" class="hidden"> ou <a class="css3button negative" onClick="unset_schedule()">Descartar e escolher um perfil</a></span>
+				{{field}}
+				{% else %}
+					{%if field.label == 'Conjunto de arquivos' %}
+				<label>{{ field.label }}:</label><br />
+				<a href="/filesets/add/" class="filesets css3button positive" id="fileset_button">Criar um conjunto de arquivos</a>
+				<span id="discard_fileset" class="hidden"> ou <a class="css3button negative" onClick="unset_fileset()">Descartar e escolher um perfil</a></span>
+				{{field}}
+					{% else %}
+						{%if field.label == 'Tempo de retenção' %}
+				<label>{{field.label}}: <span id="slider_value"></span> dias</label><br />
+				{{field}}
+				<div id="slider"></div>
+				<span class="add_new_pool"><a href="#">Adicionar Outro Valor</a></span>
+						{% else %}
+				<label>{{ field.label }}:</label><br />
+				{{ field }}
+						{% endif %}
+					{% endif %}
+				{% endif %}
+			</p>
+			{% endfor %}
+			{% for hidden in form.hidden_fields %}
+			{{ hidden }}
+			{% endfor %}
+			<hr />
+			<p><button type="submit" value="submit" class="css3button big positive">Salvar</button><a href="/procedures/list" class="css3button big negative">Cancelar</a></p>
+		</form>
+		<form action="/schedules/add/" method="POST" id="to_schedule_form"></form>
+	</div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,116 @@
+{% extends "base.html" %}
+
+{% block headtags %}
+<script type="text/javascript" src="/media/js/procedures.js"></script>
+<link rel="stylesheet" type="text/css" href="/media/css/procedures.css" />
+
+{% endblock %}
+
+{% block page %}
+
+<div class="block">
+	<div class="block_head">
+		<div class="bheadl"></div>
+		<div class="bheadr"></div>
+		<h2>{{title}}</h2>
+	</div>
+
+    <div class="block_content">
+        <p></p>
+        <div class="procedures">
+        {% for procedure in procedures %}
+            <div class="procedure">
+                <div class="left">
+                    <div class="title">
+                        <img src="/media/icons/engine.png" alt=""/>
+                        <h3 class="name">{{procedure.name}}</h3>
+                        <small>Computador: {{procedure.computer.name}} ({{procedure.computer.operation_system|title}})</small>
+                    </div>
+                    <p class="options">
+                        <a href="/procedures/{{procedure.id}}/edit/" class="css3button positive pill">Editar</a>
+                        <a href="/procedures/{{procedure.id}}/delete/" class="css3button negative pill">Remover</a>
+                    </p>
+                </div>
+                <div class="right">
+                    <div class="floatright align-left">
+                        <form action="/procedures/{{procedure.id}}/execute/" method="post" class="floatright">
+                            <button type="submit" class="css3button positive" value="Executar agora">Executar Agora</button>
+                        </form>
+                       {% if not procedure.active %}
+                        <form action="/procedures/{{procedure.id}}/activate/" method="post" class="floatright">
+                            <button type="submit" class="css3button positive" value="Ativar">Ativar</button>
+                        </form>
+                        {% else %}
+                        <form action="/procedures/{{procedure.id}}/deactivate/" method="post" class="floatright">
+                            <button type="submit" class="css3button negative" value="Desativar">Desativar</button>
+                        </form>
+                        {% endif %}
+                    </div>
+                    <h4>CONFIGURAÇÕES DO PROCEDIMENTO</h4>
+                    <div class="procedure-config">
+                        <div style="width: 69%; float: left;">
+                            Conjunto de arquivos: <strong>{{procedure.fileset.name}}</strong>
+							{% if procedure.fileset.is_model %}
+								[Perfil]
+							{% endif %}
+							<br/>
+                            Agendamento: <strong>{{procedure.schedule.name}}</strong>
+							{% if procedure.schedule.is_model %}
+								[Perfil]
+							{% endif %}
+							<br/>
+                            Tempo de retenção dos arquivos: <strong>{{procedure.pool_retention_time}}</strong>
+                        </div>
+                        <div style="width: 29%; float: right;">
+                            &nbsp;
+                            <!-- Use this div to display any content you need to. The following images are just for testing.
+<img src="/media/icons/exchange32.png" alt="Running" />
+                            <img src="/media/icons/check32.png" alt="Check" />
+                            <img src="/media/icons/stop32.png" alt="Stop" />
+                            <img src="/media/icons/sleep32.png" alt="Sleep" />
+                            <img src="/media/icons/warning32.png" alt="Warn" />
+-->
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+                </div>
+                <div class="clear"></div>
+            </div>
+        {% empty %}
+            <p>Não existem procedimentos adicionados.</p>
+        {% endfor %}
+        </div>
+
+    </div>
+    
+    <div class="bendl"></div>
+	<div class="bendr"></div>
+
+</div>
+
+        <div class="block">
+
+    		<div class="block_head">
+    			<div class="bheadl"></div>
+    			<div class="bheadr"></div>
+
+    			<h2 class="floatleft">Histórico de Procedimentos</h2>&nbsp;&nbsp;
+    			<a href="/procedures/history" class="css3button positive">Listar todos os procedimentos</a>
+
+    		</div>		<!-- .block_head ends -->
+
+            <div class="block_content">
+		    {% with backups_com_falhas as item %}
+    		    <div class="stat_block">
+                {% include "stat_block.html" %}
+                </div>
+    		{% endwith %}
+    		</div>
+
+    		<div class="bendl"></div>
+    		<div class="bendr"></div>
+    	</div>		<!-- .block ends -->
+    
+
+
+{% endblock %}

@@ -1,0 +1,10 @@
+Device {
+	Name = {{ name }}
+	LabelMedia = yes
+	AlwaysOpen = no
+	Random Access = yes
+	Archive Device = {{ archive_device }}
+	Media Type = File
+	RemovableMedia = no
+	AutomaticMount = yes
+}

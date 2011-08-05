@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+
+{% block headtags %}
+<link rel="stylesheet" type="text/css" href="/media/css/computers.css" />
+<script type="text/javascript" src="/media/jquery.js"></script>
+<script type="text/javascript" src="/media/jquery.cookie.js"></script>
+<script type="text/javascript" src="/media/js/computers.js"></script>
+{% endblock %}
+
+{% block page %}
+
+<div class="block">
+
+	<div class="block_head">
+		<div class="bheadl"></div>
+		<div class="bheadr"></div>
+		<h2>{{title}}</h2>
+	</div>		<!-- .block_head ends -->
+
+    <div class="block_content">
+        <p>
+            <a href="/computers/add" class="css3button positive">Adicionar computador</a>
+            <a href="/computers/" class="css3button positive">Visualizar todos os computadores</a>
+        </p>
+
+        <div class="computer {% if not computer.active %}desativado{% endif %}">
+            <div class="left">
+                <div class="title">
+                    <img src="/media/icons/computer.png" alt=""/>
+                    <h3 class="name"><a href="/computers/{{ computer.id }}/view">{{computer.name}}</a></h3>
+                    <small class="ip">{{computer.address}} - {{computer.operation_system|title}} - {% for g in computer.groups.all %}{{g.name}}{% endfor %}</small>
+                </div>
+                <p class="description">{{computer.description}}</p>
+                <p class="options">
+                    <a href="/computers/{{computer.id}}/edit/" class="css3button positive">Editar</a>
+				    <a href="/computers/{{computer.id}}/delete/" class="css3button negative">Remover</a>
+				</p>
+            </div>
+            <div class="right">
+                <div class="floatright">
+                    {% if not computer.active %}
+                    <form action="/computers/{{computer.id}}/activate/" method="post" class="floatright">
+                        <button type="submit" class="css3button positive" value="Ativar">Ativar</button>
+                    </form>
+                    {% endif %}
+                    {% if computer.procedure_set.count %}
+                    <form action="/restore/{{computer.id}}/view/" method="post" class="floatright">
+                        <button type="submit" class="css3button positive" value="Restaurar">Restaurar</button>
+                    </form>
+                    {% endif %}
+                    <a href="/procedures/add/?comp_id={{ computer.id }}" class="floatright css3button positive">Criar Backup</a>
+                    <a href="/computers/{{computer.id}}/configure/" class="css3button positive">Reconfigurar</a>
+                </div>
+                {% if not computer.procedure_set.count %}
+                    <p>Não existem procedimentos para este computador.</p>
+                {% else %}
+                    <h4 class="floatleft">ARQUIVOS PARA BACKUP</h4>
+                    <div class="clear"></div>
+                    <div class="files">
+                        {% for proc in computer.procedure_set.all %}
+                        <div class="file">
+                            <div class="title">
+                                <a href="#" class="toggle" ref="fileset_detail">
+                                    <img src="/media/icons/folder.png"/>
+                                    <h4 class="name">{{proc.fileset.name}}</h4>
+                                    <small class="ip">{% for file in proc.fileset.files.all|slice:":3" %}{{file.path}} - {% endfor %}</small>
+                                </a>
+                            </div>
+                            <div class="fileset_detail">
+                                <br/>
+                                Local de armazenamento: <strong><a href="/storages/{{proc.storage.id}}/view"><span title="Endereço: {{proc.storage.address}} - {{proc.storage.description|slice:":25"}}...">{{proc.storage.name}}</span></a></strong><br/>
+                                Agendamento: <strong>{{proc.schedule}}</strong> <small>(<a href="/procedures/{{proc.id}}/edit">editar</a>)</small><br/>
+                                Arquivos: <small>(<a href="/procedures/{{proc.id}}/edit/">editar</a>)</small>
+                                <ul>
+                                    {% for file in proc.fileset.files.all %}
+                                    <li><strong>{{file.path}}</strong></li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+            <div class="clear"></div>
+        </div>
+
+        
+        {% with backups_em_execucao as item %}
+		    <div class="stat_block">
+            {% include "stat_block.html" %}
+            </div>
+		{% endwith %}
+		
+    </div>
+    
+    <div class="bendl"></div>
+	<div class="bendr"></div>
+
+</div>
+
+{% endblock %}

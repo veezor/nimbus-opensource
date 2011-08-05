@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block headtags %}
+<script type="text/javascript" src="/media/js/storages.js"></script>
+<link rel="stylesheet" type="text/css" href="/media/css/storages.css" />
+{% endblock %}
+
+{% block page %}
+
+<div class="block">
+
+	<div class="block_head">
+		<div class="bheadl"></div>
+		<div class="bheadr"></div>
+		<h2>{{title}}</h2>
+	</div>
+
+    <div class="block_content">
+        <p><a href="/storages/add" class="css3button positive">Adicionar armazenamento</a></p>
+        <div class="storages">
+        {% for storage in storages %}
+            <div class="storage {% if not storage.active %}desativado{% endif %}">
+                {% if not storage.active %}<p><strong>Este armazenamento está desativado.</strong></p>{% endif %}
+                <div class="left">
+                    <div class="title">
+                        <img src="/media/icons/storage.png"/>
+                        <h3 class="name"><a href="/storages/{{ storage.id }}/view">{{storage.name}}</a></h3>
+                        <small class="ip">{{storage.address}}</small>
+                    </div>
+                    <p class="description">{{storage.description}}</p>
+                    <p class="options"><a href="/storages/{{storage.id}}/edit/" class="css3button positive">Editar</a></p>
+                    
+                </div>
+                <div class="right">
+                    <div class="floatright">
+                        {% if not storage.active %}
+                        <form action="/storages/{{storage.id}}/activate/" method="post" class="floatright">
+                            <button type="submit" class="css3button positive" value="Ativar">Ativar</button>
+                        </form>
+                        {% endif %}
+                    </div>
+               </div>
+                <div class="clear"></div>
+            </div>
+        {% empty %}
+            <h2>Não existem armazenamentos ativos.</h2>
+            <p>Tente <a href="{% url nimbus.storages.views.add %}">adicionar um armazenamento</a>.</p>
+        {% endfor %}
+    </div>
+        
+    </div>
+    
+    <div class="bendl"></div>
+	<div class="bendr"></div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,10 @@
+Job {
+    Name = "{{name}}"
+    Type = Restore
+    Client = "{{client}}"
+    FileSet= "{{fileset}}"
+    Storage = "{{storage}}"
+    Pool = "{{pool}}"
+    Messages = "Standard"
+    Where = /tmp/bacula-restores
+}

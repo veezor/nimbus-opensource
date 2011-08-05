@@ -1,0 +1,21 @@
+Storage {
+    Name = {{ name }}
+    WorkingDirectory = "/var/bacula/working"
+    Maximum Concurrent Jobs = {{ max_cur_jobs }} 
+    SDPort = {{ port }}
+    PidDirectory = "/var/run"
+    Client Connect Wait = 30 seconds
+    }
+
+Director {
+	Name = {{ director_name }}
+	Password = "{{director_password}}"
+}
+
+Messages {
+	Name = Standard
+	Director = {{ director_name }} = all
+}
+
+@|"sh -c 'for f in {{ devices_dir }}/* ; do echo @${f} ; done'"
+

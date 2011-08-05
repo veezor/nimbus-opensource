@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+
+{% block headtags %}
+<script type="text/javascript" src="/media/js/storages.js"></script>
+<link rel="stylesheet" type="text/css" href="/media/css/storages.css" />
+{% endblock %}
+
+{% block page %}
+
+<div class="block">
+
+	<div class="block_head">
+		<div class="bheadl"></div>
+		<div class="bheadr"></div>
+		<h2>{{title}}</h2>
+	</div>
+
+    <div class="block_content">
+        <p><a href="/storages/add">Adicionar armazenamento</a> • <a href="/storages/list">Visualizar todos os armazenamentos</a></p>
+        <div class="storages">
+            <div class="storage">
+                <div class="left">
+                    <div class="title">
+                        <img src="/media/icons/storage.png"/>
+                        <h3 class="name">{{storage.name}}</h3>
+                        <small class="ip">{{storage.address}}</small>
+                    </div>
+                    <p class="description">{{storage.description}}</p>
+                    <p class="options"><a href="/storages/{{storage.id}}/edit/">Editar</a></p>
+                    
+                </div>
+                <div class="right">
+                    {% if not storage.procedure_set.count %}
+                        <div class="message warning">
+                            <p>Não existem procedimentos relacionados a este armazenamento.</p>
+                        </div>
+                    {% else %}
+                        <h4>COMPUTADORES RELACIONADOS</h4>
+                        
+                        <div id="computer-list">
+                        {% for computer in storage.get_computers %}
+                            <div class="computers">
+                                <div class="title">
+                                    <a href="#" class="toggle" ref="computer_detail">
+                                        <img src="/media/icons/computer.png"/>
+                                        <h4>{{computer.name}}</h4>
+                                    </a>
+                                </div>
+                                <div class="computer_detail" class="hidden">
+                                    {% for proc in computer.procedure_set.all %}
+                                        <h4 class="name">{{proc.name}} <small><a href="{% url nimbus.procedures.views.edit procedure_id=proc.id %}">(editar)</a></small></h4>
+                                        Agendamento: {{proc.schedule}}<br/>
+                                        Conjunto de arquivos: {{proc.fileset}}
+                                        <p></p>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="clear"></div>
+            </div>
+        </div>
+        
+        <div class="block-executados">
+            <h3>Espaço em disco</h3>
+            {% with espaco_em_disco as value %}
+		        {% include "bar_chart.html" %}
+		    {% endwith %}
+            <div class="clear"></div>
+		    <p></p>
+        </div>
+        
+	    {% with backups_em_execucao as item %}
+		    <div class="stat_block">
+            {% include "stat_block.html" %}
+            </div>
+		{% endwith %}
+        
+        <p></p>
+    </div>
+    
+    <div class="bendl"></div>
+	<div class="bendr"></div>
+
+</div>
+
+{% endblock %}

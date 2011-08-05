@@ -1,0 +1,26 @@
+upstream app_server {
+     server 127.0.0.1:8000 fail_timeout=0;
+}
+
+server {
+    listen 80 default;
+    client_max_body_size 4G;
+    server_name _;
+
+    keepalive_timeout 5;
+
+    location /media/  {
+        root /var/www/;
+    }
+    location / {
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header Host $http_host;
+        proxy_redirect off;
+
+        if (!-f $request_filename) {
+            proxy_pass http://app_server;
+            break;
+        }
+    }
+
+}

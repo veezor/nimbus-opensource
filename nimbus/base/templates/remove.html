@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block headtags %}
+{% endblock %}
+
+{% block page %}
+
+<div class="block">
+
+	<div class="block_head">
+		<div class="bheadl"></div>
+		<div class="bheadr"></div>
+		<h2>Confirmação de remoção</h2>
+	</div>		<!-- .block_head ends -->
+
+    <div class="block_content">
+        <form method="post" action="{{action_url}}">
+            <h1>Você está prestes a remover "{{remove_name}}".</h1>
+            <p>Esta operação não poderá ser desfeita. Deseja prosseguir mesmo assim?</p>
+            <p>
+                <input type="submit" class="submit mid" name="confirm" value="Prosseguir" /> ou <a href="" onclick="history.back(-1); return false;">Cancelar</a>
+            </p>
+        </form>
+    </div>
+
+    <div class="bendl"></div>
+	<div class="bendr"></div>
+
+</div>
+
+{% endblock %}

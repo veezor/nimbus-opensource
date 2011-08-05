@@ -1,0 +1,15 @@
+{% extends "base_wizard.html" %}
+
+{% block content %}
+
+    <form action="" method="post" id="{{page_name}}_form">
+        <p>Deseja iniciar a recuperação do sistema?</p>
+        <p class="input_submit">
+            <a href="{{ next }}" class="submit left"><span>Não</span></a> &nbsp;
+            <input type="submit" class="submit right no_margin" value="Sim" />
+        </p>
+
+    </form>
+
+
+{% endblock %}

@@ -1,0 +1,7 @@
+Package: nimbus
+Priority: optional
+Version: 1.0.214
+Architecture: i386
+Maintainer: Veezor
+Depends: nimbus-dependencies (>= 0.9), postgresql-8.4, nginx, python-pkg-resources, python-pycurl, python-setuptools
+Description: Nimbus Backup System

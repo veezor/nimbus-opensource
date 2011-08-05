@@ -1,0 +1,12 @@
+{% for device in devices %}
+Storage {
+	Name = {{ device.storage.bacula_name }}
+	Media Type = File
+	Address = {{ device.storage.address }}
+	Device = {{ device.bacula_name }}
+	Password = "{{device.storage.password}}"
+	SDPort = 9103
+}
+{% endfor %}
+
+

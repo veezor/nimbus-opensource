@@ -1,0 +1,39 @@
+Director {
+	Name = {{ director_name }}
+	Password = "{{director_password}}"
+	Maximum Concurrent Jobs = 99
+	WorkingDirectory = "/var/bacula/working"
+	DIRport = 9101
+	Messages = Daemon
+	PidDirectory = "/var/run"
+	QueryFile = "/etc/bacula/query.sql"
+	FD Connect Timeout = 30 seconds
+	SD Connect Timeout = 30 seconds
+}
+
+Catalog {
+    DB Address = 127.0.0.1
+	dbuser = {{ db_user }}
+	dbpassword = "{{db_password}}"
+	Name = MyCatalog
+	dbname = "{{db_name}}"
+}
+
+Messages {
+	console = all, !skipped, !saved
+	Name = Standard
+	append = "/var/bacula/working/log" = all, !skipped
+}
+
+Messages {
+	console = all, !skipped, !saved
+	Name = Daemon
+	append = "/var/bacula/working/log" = all, !skipped
+}
+
+@|"sh -c 'for f in {{ computers_dir }}/* ; do echo @${f} ; done'"
+@|"sh -c 'for f in {{ filesets_dir }}/* ; do echo @${f} ; done'"
+@|"sh -c 'for f in {{ jobs_dir }}/* ; do echo @${f} ; done'"
+@|"sh -c 'for f in {{ pools_dir }}/* ; do echo @${f} ; done'"
+@|"sh -c 'for f in {{ schedules_dir }}/* ; do echo @${f} ; done'"
+@|"sh -c 'for f in {{ storages_dir }}/* ; do echo @${f} ; done'"

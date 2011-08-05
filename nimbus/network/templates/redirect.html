@@ -1,0 +1,22 @@
+{% extends "base_wizard.html" %}
+
+{% block headtags %}
+
+<script type="text/javascript" charset="utf-8">
+    $(document).ready(function(){
+        ip_address = '{{ ip_address }}';
+        
+        setTimeout(function() {
+            document.location.href = 'http://{{ ip_address }}/{{ url }}';
+        }, 10000);
+    });
+</script>
+
+{% endblock %}
+
+{% block page %}
+
+<h1>Você está sendo redirecionado para o novo ip. &nbsp;<img src="/media/icons/loading_bar.gif" /></h1>
+<p>Se em até 10 segundos você não for redirecionado para o novo endereço, acesse <a href="http://{{ ip_address }}/{{ url }}">http://{{ ip_address }}/{{ url }}</a>.</p>
+
+{% endblock %}

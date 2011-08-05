@@ -1,0 +1,20 @@
+Job {
+    Write Bootstrap = "/bacula/{{name}}.bsr"
+    Name = "{{name}}"
+    Schedule = "{{schedule}}"
+    Messages = "Standard"
+    Storage = "{{storage}}"
+    FileSet = "{{fileset}}"
+    Priority = "{{priority}}"
+    Client = "{{client}}"
+    Type = "Backup"
+    Pool = "{{pool}}"
+    {% if active %}
+    Enabled = "yes"
+    {% else %}
+    Enabled = "no"
+    {% endif %}
+    {% if offsite %}
+    Run After Job = "/var/www/nimbus {{offsite_param}}"
+    {% endif %}
+}

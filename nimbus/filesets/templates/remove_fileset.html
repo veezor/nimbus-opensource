@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block headtags %}
+{% endblock %}
+
+{% block page %}
+
+<div class="block">
+
+	<div class="block_head">
+		<div class="bheadl"></div>
+		<div class="bheadr"></div>
+		<h2>Confirmação de remoção</h2>
+	</div>		<!-- .block_head ends -->
+
+    <div class="block_content">
+        <form method="post" action="">
+            <h1>Você está prestes a remover o conjunto de arquivos "{{fileset.name}}".</h1>
+				{% if procedures %}
+				Os seguintes procedimentos de backup utilizam este conjunto de arquivos:
+					{% for procedure in procedures %}
+				<li>{{procedure.name}}</li>
+					{% endfor %}
+				Remover este conjunto de não afetará o funcionamento dos backups listados.
+				{% else %}
+				Não existe nenhum procedimento de backup utilizando este conjunto de arquivos.
+				{% endif %}
+			<br />
+			<p><strong>Esta operação não poderá ser desfeita. Deseja prosseguir mesmo assim?</strong></p>
+            <p>
+                <!-- <input type="submit" class="css3button positive" name="confirm" value="Prosseguir" /> ou <a href="" onclick="history.back(-1); return false;">Cancelar</a> -->
+                <a href="/filesets/do_delete/{{fileset.id}}" class="css3button negative">Excluir</a> ou <a href="" class="css3button positive" onclick="history.back(-1); return false;">Cancelar</a>
+            </p>
+        </form>
+    </div>
+
+    <div class="bendl"></div>
+	<div class="bendr"></div>
+
+</div>
+
+{% endblock %}

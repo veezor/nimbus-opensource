@@ -1,0 +1,39 @@
+{% block headtags %}
+<link rel="stylesheet" type="text/css" href="/media/css/filesets.css" media="screen" />
+<script type="text/javascript" src="/media/js/filesets.js"></script>
+<script type="text/javascript" src="/media/lib/js/tree_plugin.js"></script>
+{% endblock %}
+
+{% block page %}
+<div id="fileset" class="block">
+	<div class="block_head">
+		<div class="bheadl"></div>
+		<div class="bheadr"></div>
+		<h2>{{ title }}</h2>
+	</div>		<!-- .block_head ends -->
+	<div class="block_content">
+        <form action="/filesets/do_add/" method="post" id="main_form">
+			<input type="hidden" name="files-TOTAL_FORMS" value="0" id="id_files-TOTAL_FORMS">
+			<input type="hidden" name="files-INITIAL_FORMS" value="0" id="id_files-INITIAL_FORMS">
+			<input type="hidden" name="files-MAX_NUM_FORMS" id="id_files-MAX_NUM_FORMS">
+			<input type="hidden" value="{{ computer.id }}" id="computer_id" />
+			<ul class="tree"><li class="directory first"><span><a href="#" path="/">Arquivos</a></span></li></ul>
+			<hr />
+			<span id="field_error_0" class="field_error" style="display: none;">Preencha os campos abaixo corretamente<br/></span>
+			<p {% if hide_name %}class="hidden"{% endif %}>
+			<label>{{fileset_form.name.label}}: </label>{{ fileset_form.name }}
+			</p>
+			<p class="hidden">
+			<label>{{fileset_form.is_model.label}}: </label>{{ fileset_form.is_model }}
+			</p>
+            <hr />
+			<p>
+                <button type="button" class="css3button positive big" id="submit_button" value="Salvar">Salvar</button>
+            </p>
+        </form>
+	</div>		<!-- .block_content ends -->
+	<div class="bendl"></div>
+	<div class="bendr"></div>
+</div>		<!-- .block ends -->
+
+{% endblock %}

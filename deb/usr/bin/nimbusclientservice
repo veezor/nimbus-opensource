@@ -1,0 +1,86 @@
+#!/usr/bin/env python
+# -*- coding: UTF-8 -*-
+
+
+import os
+import codecs
+import subprocess
+import locale
+import SocketServer, socket
+from time import sleep
+from glob import glob
+from SimpleXMLRPCServer import ( SimpleXMLRPCServer, 
+                                 SimpleXMLRPCRequestHandler )
+
+
+TIMEOUT = 15
+
+socket.setdefaulttimeout(TIMEOUT)
+
+
+
+KEYPAR = "/etc/nimbus/client.pem"
+MASTERKEY = "/etc/nimbus/master.key"
+FDCONF = "/etc/bacula/bacula-fd.conf"
+BACULAFD = "/etc/init.d/bacula-ctl-fd"
+
+
+
+class AsyncXMLRPCServer(SocketServer.ThreadingMixIn, SimpleXMLRPCServer):
+    pass
+
+
+def is_dir(name):
+    if os.path.isdir(name):
+        return name + "/" 
+    return name
+
+
+class NimbusService(object):
+
+
+    def save_keys(self, keypar, masterkey):
+        with file(KEYPAR, "w") as f:
+            f.write(keypar)
+
+        with file(MASTERKEY, "w") as f:
+            f.write(masterkey)
+
+        return True
+        
+
+    def save_config(self, config):
+        with codecs.open(FDCONF, "w", "utf-8") as f:
+            f.write(config)
+        return True
+
+
+    def restart_bacula(self):
+        cmd = subprocess.Popen( [BACULAFD, "restart"], 
+                                stderr=subprocess.PIPE,
+                                stdout=subprocess.PIPE )
+        cmd.communicate()
+        return True
+
+
+    def list_dir(self, path):
+        try:
+
+            def _convert_encoding_filename(filename):
+                if not isinstance(filename, unicode):
+                    return filename.decode(locale.getpreferredencoding())
+                return filename
+
+
+            files = glob(os.path.join(path,'*'))
+            files = map(is_dir, files)
+            files = [ _convert_encoding_filename(f) for f in files]
+            return files
+        except IOError, error:
+            return []
+
+
+if __name__ == '__main__':
+    service = SimpleXMLRPCServer(('',11110))
+    service.register_instance(NimbusService())
+    service.serve_forever()

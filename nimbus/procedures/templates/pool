@@ -1,0 +1,15 @@
+Pool {
+    Name = "{{name}}"
+    Label Format = "{{name}}-vol-"
+    Maximum Volume Jobs = 1
+    Volume Retention = {{days}} days
+    File Retention = {{days}} days
+    Job Retention = {{days}} days
+    Pool Type = "Backup"
+    Purge Oldest Volume = "yes"
+    AutoPrune = "yes"
+    Recycle = "yes"
+    Recycle Oldest Volume = "yes"
+    Action on Purge =  Truncate
+}
+

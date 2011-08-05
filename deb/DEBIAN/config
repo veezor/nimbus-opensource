@@ -1,0 +1,47 @@
+#!/bin/sh
+# config script for bacula-nimbus ( PostgreSQL flavor )
+
+. /usr/share/debconf/confmodule
+db_version 2.0
+dbc_dbuser=nimbus
+dbc_dbname=nimbus
+dbc_dbpass='n1mbus'
+dbc_pgsql_createdb_encoding="SQL_ASCII"
+dbc_sql_substitutions="1"
+dbc_install='true'
+dbc_upgrade='true'
+dbc_remove='false'
+dbc_dbtype='pgsql'
+dbc_dbserver=''
+dbc_dbport=''
+dbc_dbadmin='postgres'
+dbc_basepath=''
+dbc_ssl=''
+dbc_authmethod_admin='ident'
+dbc_authmethod_user='ident'
+
+# source dbconfig-common shell library, and call the hook function
+if [ -f /usr/share/dbconfig-common/dpkg/config.pgsql ]; then
+  . /usr/share/dbconfig-common/dpkg/config.pgsql
+  dbc_go nimbus $@
+fi
+
+set -e
+
+
+case "$1" in
+        configure)
+        ;;
+
+        reconfigure)
+
+        ;;
+
+        *)
+                echo "config called with unknown argument \$1'" >&2
+                exit 0
+        ;;
+esac
+
+exit 0
+

@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block headtags %}
+<script type="text/javascript" src="/media/js/procedures.js"></script>
+<link rel="stylesheet" type="text/css" href="/media/css/procedures.css" />
+{% endblock %}
+
+{% block page %}
+
+<div class="block">
+
+	<div class="block_head">
+		<div class="bheadl"></div>
+		<div class="bheadr"></div>
+		<h2>Confirmação de remoção</h2>
+	</div>		<!-- .block_head ends -->
+
+    <div class="block_content">
+        <form method="post" action="">
+            <h1>Você está prestes a remover o computador "{{computer.name}}".</h1>
+			<ul>
+				{% if procedures %}
+				<li> Os seguintes procedimentos de backup estão associados a este computador e serão apagados:</li>
+				<ol>
+					{% for procedure in procedures %}
+					<li>{{procedure.name}}</li>
+					<ol>
+					{% if procedure.fileset.is_model %}
+					<li>O perfil do conjunto de arquivos <strong>"{{procedure.fileset.name}}"</strong> não será afetado.</li>
+					{% else %}
+					<li>O conjunto de arquivos <strong>"{{procedure.fileset.name}}"</strong> é usado apenas por <strong>"{{procedure.name}}"</strong> e <strong>será removido</strong>.</li>
+					{% endif %}
+					{% if procedure.schedule.is_model %}
+					<li>O perfil de agendamento <strong>"{{procedure.schedule.name}}"</strong> não será afetado.</li>
+					{% else %}
+					<li>O agendamento <strong>"{{procedure.schedule.name}}"</strong> é usado apenas por <strong>"{{procedure.name}}"</strong> e <strong>será removido</strong>.</li>
+					{% endif %}
+					</ol>
+					{% endfor %}
+				</ol>
+				{% else %}
+				<li>Não existem procedimentos de backup associados a este computador.</li>
+				{% endif %}
+				{% if last_jobs %}
+				<li>Os seguintes backups serão apagados e não mais poderão ser restaurados:</li>
+				<div style="margin-left: 50px; margin-right: 50px;">
+        		{% include "stat_block.html" %}
+				</div>
+				{% else %}
+				<li>Não existem backups salvos relacionados a este computador.</li>
+				{% endif %}
+			</ul>
+            <br \>
+			<p><strong>Esta operação não poderá ser desfeita. Deseja prosseguir mesmo assim?</strong></p>
+            <p>
+                <!-- <input type="submit" class="css3button positive" name="confirm" value="Prosseguir" /> ou <a href="" onclick="history.back(-1); return false;">Cancelar</a> -->
+                <a href="/computers/{{computer.id}}/do_delete/" class="css3button negative">Excluir</a> ou <a href="" class="css3button positive" onclick="history.back(-1); return false;">Cancelar</a>
+            </p>
+        </form>
+    </div>
+
+    <div class="bendl"></div>
+	<div class="bendr"></div>
+
+</div>
+
+{% endblock %}

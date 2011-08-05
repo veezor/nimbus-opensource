@@ -1,0 +1,46 @@
+Director {
+  Name = {{ director_name }}
+  Password = "{{ password }}"
+}
+
+FileDaemon {                          
+  Name = {{ name }}
+  FDport = 9102
+
+  {%ifequal os  "windows" %}             
+  WorkingDirectory = "C:\\Program Files\\Bacula\\working"
+  Pid Directory = "C:\\Program Files\\Bacula\\working"
+  {% else %}
+  WorkingDirectory = /var/bacula/working/
+  Pid Directory = /var/run
+  {% endifequal %}
+
+  Maximum Concurrent Jobs = 20
+
+
+  PKI Signatures = Yes         
+  PKI Encryption = Yes           
+
+  {% ifequal os "windows" %}
+   PKI Keypair = "C:\\Program Files\\Bacula\\client.pem"    
+   PKI Master Key = "C:\\Program Files\\Bacula\\master.cert"   
+  {% else %}
+
+   {% if nimbus %}
+    PKI Keypair = "{{ certificates }}/client.pem"    
+    PKI Master Key = "{{ certificates }}/master.cert"   
+   {% else %}
+    PKI Keypair = "/etc/nimbus/client.pem"    
+    PKI Master Key = "/etc/nimbus/master.key"   
+   {% endif %}
+  
+  {% endifequal %}
+
+  SD Connect Timeout = 30 seconds
+
+}
+
+Messages {
+  Name = Standard
+  director = {{ director_name }} = all, !skipped, !restored
+}

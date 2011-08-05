@@ -1,0 +1,8 @@
+Client {
+    Name = {{name}}
+    Catalog = MyCatalog
+    AutoPrune = yes
+    Address = {{ip}}
+    FDPort = 9102
+    password = "{{password}}"
+}

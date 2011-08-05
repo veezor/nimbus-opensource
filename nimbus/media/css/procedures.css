@@ -1,0 +1,226 @@
+.submit.tiny {
+    text-shadow: 0px 0px white;
+    font-size: 11px;
+    padding: 2px;
+    width: 200px;
+}
+.clear{clear: both; float: none; display: block;}
+
+#slider{
+	width: 300px; float: left; margin-right: 20px;
+}
+
+.procedure {
+    padding: 0; -moz-border-radius: 5px; background: #fff; margin-bottom: 20px;
+}
+
+.procedure .left {
+    float: left; width: 250px;
+}
+
+.procedure .right {
+    float: right; width: 600px;
+}
+
+.procedure .title img {
+    float: left; height: 32px; padding-right: 10px;
+}
+
+.procedure .name {
+    margin: 0 0 -5px 0; padding: 0;
+}
+
+.procedure .options {
+    font-size: 10px; margin: 0px; padding: 0; line-height: 1.4em;
+}
+
+.procedure.desativado {
+    background: #FFE5EB !important;
+    border: 2px solid #e7696d;
+    -moz-border-radius: 5px;
+}
+
+.procedure .submit.tiny {
+    float: right;
+}
+
+.procedure-config {
+    background: #FFF;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border: 1px solid #CCC;
+    padding: 10px;
+}
+
+.profile {
+    padding: 20px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    background: #EEE;
+    margin-bottom: 20px;
+}
+
+.profile .left {
+    float: left;
+    width: 250px;
+}
+
+.profile .right {
+    float: right;
+    width: 600px;
+}
+
+.profile img {
+    float: left;
+    height: 32px;
+    padding-right: 10px;
+}
+
+.profile .options {
+    font-size: 10px;
+    line-height: 1.4em;
+}
+
+.profile-config {
+    background: #FFF;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    padding: 10px;
+    border: 1px solid #CCC;
+}
+
+.fileset {
+    border: 2px solid #67c7a1;
+    padding: 0;
+    background: #fff;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+}
+
+.fileset .title{
+    background: #67c7a1;
+    color: #000;
+    padding: 5px;
+}
+.fileset .title .name{
+    font-size: 16px;
+}
+.fileset .body{
+    padding: 8px 15px;
+}
+
+.fileset .body .left{
+    width: 430px; float: left;
+}
+
+.fileset .body .right{
+    width: 430px; float: right;
+}
+
+.list{
+    display: block;
+    height: 200px;
+    overflow: auto;
+    border: 1px solid #ccc;
+}
+
+.no-display{
+    display: none;
+}
+
+/* fileset tables */
+
+.fileset table tbody tr.hvr{
+    background: #edf0f9;
+}
+
+.fileset table tbody tr.nrl{
+    background: #fff;
+}
+
+.fileset table{
+    width: 100%;
+    border-top: 1px solid #ccc;
+    border-left: 1px solid #ccc;
+}
+
+.fileset table thead th{
+    background: #f0f0f0;
+}
+
+.fileset table thead th, .fileset table tbody td{
+    border-bottom: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+}
+
+.fileset_checkbox{
+    width:50px;
+    margin-bottom:15px;
+}
+
+.fileset_input{
+    width:50px;
+}
+.fileset_line{
+    margin-bottom:15px;
+}
+
+/* divs at title */
+
+.title-left{
+    display: block; 
+    width: 130px; 
+    float: left;
+}
+.title-right{
+    display: block; 
+    width: 700px; 
+    text-align: right; 
+    float: right;
+}
+
+/* procedures history */
+.job_line{
+    display: block; 
+    padding: 5px;
+    cursor: pointer;
+    border-bottom: 1px solid #ccc;
+    font-size: 11px;
+}
+.over{
+    background: #f0f0f0;
+}
+.hide{
+    background: #f3f3f3;
+}
+.hide table thead th, .hide table tbody td{
+    font-size: 11px;
+}
+.status_ok, .status_error, .status_warning, .status_waiting, .status_running{
+    -moz-border-radius: 3px;
+    -khtml-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    padding: 2px 4px;
+    font-weight: bold;
+    color: #fff;
+    text-shadow: black 0.1em 0.1em 0.2em;
+    display: block;
+    float: left;
+    /* width: 80px; */
+    margin-right: 8px;
+    padding-left: 32px;
+}
+.status_error{background: #C91A1A url(/media/icons/stop32.png) left center no-repeat;}
+.status_warning{background: #E0780F url(/media/icons/warning32.png) left center no-repeat;}
+.status_waiting{background: #9da500 url(/media/icons/sleep32.png) left center no-repeat;}
+.status_ok{background: #26BF24 url(/media/icons/check32.png) left center no-repeat;}
+.status_running{background: #1A8CA5 url(/media/icons/exchange32.png) left center no-repeat;}
+
+#accordion h3{
+    font-weight: normal;
+    font-size: 12px;
+    padding: 4px;
+    border: 1px solid #c3c3c3;
+    
+}

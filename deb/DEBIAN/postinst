@@ -1,0 +1,63 @@
+#!/bin/bash 
+
+. /usr/share/debconf/confmodule
+set -e
+
+if [ -f /usr/share/dbconfig-common/dpkg/postinst.pgsql ]; then
+  /usr/sbin/useradd nimbus||echo;
+  . /usr/share/dbconfig-common/dpkg/postinst.pgsql
+  db_version 2.0
+  dbc_pgsql_createdb_encoding="SQL_ASCII"
+  dbc_sql_substitutions="1"
+  dbc_install='true'
+  dbc_upgrade='true'
+  dbc_remove='false'
+  dbc_dbtype='pgsql'
+  dbc_dbuser='nimbus'
+  dbc_dbpass='n1mbus'
+  dbc_dbserver=''
+  dbc_dbport=''
+  dbc_dbname='nimbus'
+  dbc_dbadmin='postgres'
+  dbc_basepath=''
+  dbc_ssl=''
+  dbc_authmethod_admin='ident'
+  dbc_authmethod_user='ident'
+  dbc_go nimbus $@
+fi
+
+
+case $1 in
+    configure)
+
+	if [ ! -e /var/log/nimbus ];
+	then
+		mkdir /var/log/nimbus;
+	fi;
+
+    /etc/init.d/bacula-ctl-dir stop;
+    touch /var/nimbus/bacula.lock;
+
+
+	/usr/sbin/update-rc.d nimbusmanager defaults; 
+	/usr/sbin/update-rc.d nimbus defaults; 
+	/usr/sbin/update-rc.d nimbusclient defaults; 
+    chown -R nimbus:nimbus /etc/nimbus/;
+    chown -R nimbus:nimbus /var/log/nimbus/;
+    chown -R nimbus:nimbus /var/nimbus/;
+    chown -R nimbus:nimbus /var/www/;
+    chmod -R 0775 /var/log/nimbus/;
+    chmod -R 0775 /var/nimbus/;
+    chmod -R 0775 /etc/nimbus/;
+    chmod u+s /var/www/nimbus;
+    /usr/sbin/adduser nimbus plugdev;
+    /usr/sbin/adduser nimbus bacula;
+	/etc/init.d/nimbusmanager restart ;
+	/etc/init.d/nimbusclient restart ;
+    su - nimbus -c '/var/www/nimbus --create-database';
+    /etc/init.d/bacula-ctl-sd restart;
+    /etc/init.d/bacula-ctl-fd restart;
+    /etc/init.d/nimbus restart;
+    /etc/init.d/nginx reload;;
+esac
+

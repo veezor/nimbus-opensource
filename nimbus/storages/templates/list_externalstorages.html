@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+
+{% block page %}
+<h1> Computadores de armazenamento externo </h1>
+
+<h2> Computadores de armazenamento externo existentes: </h2>
+<div class="bloco_texto">
+    {% for device in object_list %} 
+      {{device.storage.name}} em {{device.storage.address}}<br />
+    {% endfor %}
+</div>
+
+
+{% endblock %}

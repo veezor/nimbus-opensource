@@ -1,0 +1,47 @@
+.storage {
+    padding: 20px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px; 
+    background: #EEE;
+    margin-bottom: 20px
+}
+
+.storage.desativado {
+    background: #FFE5EB !important;
+    border: 2px solid #e7696d;
+}
+
+.storage .left {
+    float: left; width: 250px;
+}
+
+.storage .right {    
+    float: right; width: 600px;
+}
+
+.storage img, .computers img {
+    float: left; height: 32px; padding-right: 10px;
+}
+
+.name {
+    margin: 0 0 -5px 0; padding: 0;
+}
+
+.options {
+    font-size: 10px; margin: 0; padding: 0; line-height: 1.4em;
+}
+.description {
+    font-size: 10px; margin-top: 10px; line-height: 1.4em;
+}
+
+.storage .submit.tiny {
+    float: right; font-size: 11px; margin-right: 0; margin-left: 5px;
+}
+
+#computer-list {
+    background: #FFF;
+    border: 1px solid #DDD;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    padding: 10px;
+}

@@ -1,0 +1,160 @@
+{% extends "base.html" %}
+
+{% block headtags %}
+<script type="text/javascript" src="/media/js/restore.js"></script>
+<script type="text/javascript" src="/media/lib/js/tree_plugin.js"></script>
+<link rel="stylesheet" type="text/css" href="/media/css/restore.css" />
+
+{% endblock %}
+
+{% block page %}
+
+<div class="block">
+
+	<div class="block_head">
+		<div class="bheadl"></div>
+		<div class="bheadr"></div>
+		<h2>{{title}}</h2>
+	</div>
+
+    <div class="block_content">
+        <form action="/restore/restore_files" id="restore_form" method="post">
+            <input id="url_tree" name="url" value="{% url nimbus.restore.views.get_tree_search_file %}" type="hidden"/>
+            {% if computer %}
+                <p><a href="/computers/list">Listar todos os computadores</a></p>
+                <div class="computers">
+                    <div class="computer">
+                        <div class="left">
+                            <div class="title">
+                                <img src="/media/icons/computer.png"/>
+                                <h3 class="name">{{computer.name}}</h3>
+                                <small class="ip">{{computer.address}} - {{computer.operation_system|title}} - {% for g in computer.groups.all %}{{g.name}}{% endfor %}</small>
+                            </div>
+                        </div>
+                        <div class="right">
+                            <p class="description">{{computer.description}}</p>
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+                    <input type="hidden" name="computer_id" id="computer_id" value="{{computer.id}}" />
+                </div>
+                
+                {% if errors.procedure_id %}
+                <ul class="errorlist">
+                    <li>{{ errors.procedure_id }}</li>
+                </ul>
+                {% endif %}
+                <p>
+                    <label for="procedure_id">Selecione o procedimento:</label><br/>
+                    <select name="procedure_id" id="procedure_id" >
+                        <option value=""> - Selecione - </option>
+                        {% for procedure in computer.procedure_set.all %}
+                        <option value="{{procedure.id}}">{{procedure.name}}</option>
+                        {% endfor %}
+                    </select>
+                </p>
+            {% else %}
+                {% if errors.computer_id %}
+                <ul class="errorlist">
+                    <li>{{ errors.computer_id }}</li>
+                </ul>
+                {% endif %}
+                <p>
+                    <label for="computer_id">Computador que será restaurado:</label><br/>
+                    <select  id="computer_id" name="computer_id">
+                        <option value=""> - Selecione - </option>
+                        {% for computer in computers %}
+                        <option value="{{computer.id}}">{{computer.name}}</option>
+                        {% endfor %}
+                    </select>
+                </p>
+                <div class="computer_error" class="hidden"></div>
+                
+                {% if errors.procedure_id %}
+                <ul class="errorlist">
+                    <li>{{ errors.procedure_id }}</li>
+                </ul>
+                {% endif %}
+                <p class="procedure_select" class="hidden">
+                    <label for="procedure_id">Selecione o procedimento:</label><br/>
+                    <select name="procedure_id" id="procedure_id" >
+                        <option value=""> - Selecione - </option>
+                        {% for procedure in computer.procedure_set.all %}
+                        <option value="{{procedure.id}}">{{procedure.name}}</option>
+                        {% endfor %}
+                    </select>
+                </p>
+            {% endif %}
+    
+            <div class="restore_step_1">
+                <h2 class="titulo_step">1. Data para restauração</h2>
+                
+                {% if errors.data_inicio %}
+                <ul class="errorlist">
+                    <li>{{ errors.data_inicio }}</li>
+                </ul>
+                {% endif %}
+                {% if errors.data_fim %}
+                <ul class="errorlist">
+                    <li>{{ errors.data_fim }}</li>
+                </ul>
+                {% endif %}
+                <p>
+    				<label>Data inicial:</label> 
+    				<input type="text" class="text date_picker" id="data_inicio" name="data_inicio" value="{% now "d-m-Y" %}" />
+    				&nbsp;&nbsp;
+    				<label>Data final:</label> 
+    				<input type="text" class="text date_picker" id="data_fim" name="data_fim" value="{% now "d-m-Y" %}" />
+    				<button type="submit" class="css3button big positive submit_step_1" value="Filtrar">Filtrar</button>
+    			</p>
+    		</div>
+
+            <div class="restore_step_2" class="hidden">
+                <h2 class="titulo_step">2. Selecione um Job para restauração</h2>
+
+                {% if errors.job_id %}
+                <ul class="errorlist">
+                    <li>{{ errors.job_id }}</li>
+                </ul>
+                {% endif %}
+                <select name="job_id"  id="jobs_list">
+                    <option value=""> - Selecione um Job - </option>
+                </select>
+                <div class="clear"></div>
+            </div>
+
+            <div class="restore_step_3" class="hidden">
+                <h2 class="titulo_step">3. Arquivos para restauração</h2>
+            
+                <p>
+    				<label>Buscar arquivo:</label>
+    				<input type="text" name="pattern" id="pattern" class="text small" />
+    				<button type="button" class="css3button big positive" id="buscar_arquivos" value="Buscar">Buscar</button>
+    			</p>
+
+                <ul class="tree"><li class="directory first"><span><a href="#" path="/">Arquivos</a></span></li></ul>
+                
+                <div class="clear"></div><hr />
+                <a href="#" class="css3button positive open_step_4"><span>Selecionar local para restauração</span></a>
+            </div>
+            <div class="restore_step_4" class="hidden">
+                <h2 class="titulo_step">4. Local para restauração</h2>
+                
+                <ul class="tree_computer"><li class="directory first"><span><a href="#" path="/">Selecione o local para restauração</a></span></li></ul>
+    		    <p>
+                    <button type="submit" class="css3button big positive" value="Restaurar Arquivos">Restaurar Arquivos</button>
+                </p>
+                <div class="clear"></div>
+            </div>
+        </form>
+        
+        <div class="clear"></div>
+        <p></p>
+    </div>
+    
+    <div class="bendl"></div>
+	<div class="bendr"></div>
+
+</div>
+
+{% endblock %}

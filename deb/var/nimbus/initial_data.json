@@ -1,0 +1,321 @@
+[
+    {
+        "pk": 1,
+        "model": "base.uuid",
+        "fields": {
+            "created_on": "2011-05-10 10:57:45",
+            "uuid_hex": "5ccae4f57d264a219c30601b33df6606"
+        }
+    },
+    {
+        "pk": 2,
+        "model": "base.uuid",
+        "fields": {
+            "created_on": "2011-05-10 10:57:53",
+            "uuid_hex": "84d927dedfd644bcba7edb16c091a688"
+        }
+    },
+    {
+        "pk": 3,
+        "model": "base.uuid",
+        "fields": {
+            "created_on": "2011-05-10 10:57:58",
+            "uuid_hex": "c2dbc270a0534d50b752cdd9c8812056"
+        }
+    },
+    {
+        "pk": 4,
+        "model": "base.uuid",
+        "fields": {
+            "created_on": "2011-05-10 10:57:58",
+            "uuid_hex": "c93776ee731b4c06b0195a355fadf30f"
+        }
+    },
+    {
+        "pk": 5,
+        "model": "base.uuid",
+        "fields": {
+            "created_on": "2011-05-10 10:58:13",
+            "uuid_hex": "d7356e6053b8470d918f38f84855687c"
+        }
+    },
+    {
+        "pk": 6,
+        "model": "base.uuid",
+        "fields": {
+            "created_on": "2011-05-10 11:09:30",
+            "uuid_hex": "cc4674bd00e24426b53717bca0c87b1e"
+        }
+    },
+    {
+        "pk": 7,
+        "model": "base.uuid",
+        "fields": {
+            "created_on": "2011-05-10 11:09:39",
+            "uuid_hex": "ad0acd9211104593b2b6a41caaeaa980"
+        }
+    },
+    {
+        "pk": 8,
+        "model": "base.uuid",
+        "fields": {
+            "created_on": "2011-05-10 11:11:12",
+            "uuid_hex": "605eb42670da42db90168d822dea6544"
+        }
+    },
+    {
+        "pk": 9,
+        "model": "base.uuid",
+        "fields": {
+            "created_on": "2011-05-10 11:12:28",
+            "uuid_hex": "d85a96ab75544f80b7bf40bbf5dcbab2"
+        }
+    },
+    {
+        "pk": 10,
+        "model": "base.uuid",
+        "fields": {
+            "created_on": "2011-05-10 11:13:19",
+            "uuid_hex": "023149bddcc3472cb0998ba0750a96bc"
+        }
+    },
+    {
+        "pk": 11,
+        "model": "base.uuid",
+        "fields": {
+            "created_on": "2011-05-10 11:14:46",
+            "uuid_hex": "c2a564252fa1419c996e27944752ebcc"
+        }
+    },
+    {
+        "pk": 12,
+        "model": "base.uuid",
+        "fields": {
+            "created_on": "2011-05-10 11:16:16",
+            "uuid_hex": "c02acdb830f74593a242215d92717830"
+        }
+    },
+    {
+        "pk": 13,
+        "model": "base.uuid",
+        "fields": {
+            "created_on": "2011-05-10 11:19:17",
+            "uuid_hex": "4c14e01968b14010a55fa3b22652ba33"
+        }
+    },
+    {
+        "pk": 14,
+        "model": "base.uuid",
+        "fields": {
+            "created_on": "2011-05-10 11:19:24",
+            "uuid_hex": "06b1b3add18041bbade3ed57d8ad2dab"
+        }
+    },
+    {
+        "pk": 15,
+        "model": "base.uuid",
+        "fields": {
+            "created_on": "2011-05-10 11:21:46",
+            "uuid_hex": "3b7cf640d5584f52b801d4d70e468813"
+        }
+    },
+    {
+        "pk": 16,
+        "model": "base.uuid",
+        "fields": {
+            "created_on": "2011-05-10 11:23:01",
+            "uuid_hex": "05429b46f5394da889ec04828040664f"
+        }
+    },
+    {
+        "pk": 1,
+        "model": "config.config",
+        "fields": {
+            "director_password": "tKuMvzdjmL6J4weOUf95",
+            "director_address": "127.0.0.1",
+            "director_name": "c93776ee731b4c06b0195a355fadf30f",
+            "uuid": 4,
+            "name": "teste"
+        }
+    },
+    {
+        "pk": 1,
+        "model": "schedules.backuplevel",
+        "fields": {
+            "name": "Full"
+        }
+    },
+    {
+        "pk": 2,
+        "model": "schedules.backuplevel",
+        "fields": {
+            "name": "Incremental"
+        }
+    },
+    {
+        "pk": 1,
+        "model": "schedules.backupkind",
+        "fields": {
+            "name": "monthly",
+			"name_pt": "mensal"
+        }
+    },
+    {
+        "pk": 2,
+        "model": "schedules.backupkind",
+        "fields": {
+            "name": "weekly",
+			"name_pt": "semanal"
+        }
+    },
+    {
+        "pk": 3,
+        "model": "schedules.backupkind",
+        "fields": {
+            "name": "daily",
+			"name_pt": "diario"
+        }
+    },
+    {
+        "pk": 4,
+        "model": "schedules.backupkind",
+        "fields": {
+            "name": "hourly",
+			"name_pt": "hora em hora"
+        }
+    },
+    {
+        "pk": 1,
+        "model": "schedules.schedule",
+        "fields": {
+            "uuid": 8,
+            "name": "Incremental \u00e0 cada hora e full \u00e0s 0horas"
+        }
+    },
+    {
+        "pk": 1,
+        "model": "schedules.run",
+        "fields": {
+            "level": 1,
+            "hour": "00",
+			"minute": "00",
+			"kind": 3,
+			"day": 0,
+            "schedule": 1
+        }
+    },
+    {
+        "pk": 2,
+        "model": "schedules.run",
+        "fields": {
+	        "level": 2,
+	        "hour": "##",
+			"minute": "00",
+			"kind": 4,
+			"day": 0,
+	        "schedule": 1
+        }
+    },
+    {
+        "pk": 1,
+        "model": "filesets.fileset",
+        "fields": {
+            "uuid": 11,
+            "name": "Conjunto de arquivos do nimbus"
+        }
+    },
+    {
+        "pk": 1,
+        "model": "filesets.filepath",
+        "fields": {
+            "path": "/etc/",
+            "fileset": 1
+        }
+    },
+    {
+        "pk": 2,
+        "model": "filesets.filepath",
+        "fields": {
+            "path": "/var/nimbus/bacula-sql.bz2",
+            "fileset": 1
+        }
+    },
+    {
+        "pk": 3,
+        "model": "filesets.filepath",
+        "fields": {
+            "path": "/var/nimbus/custom/",
+            "fileset": 1
+        }
+    },
+    {
+        "pk": 4,
+        "model": "filesets.filepath",
+        "fields": {
+            "path": "/var/nimbus/nimbus-sql.bz2",
+            "fileset": 1
+        }
+    },
+    {
+        "pk": 1,
+        "model": "storages.device",
+        "fields": {
+            "archive": "/bacula/",
+            "storage": 1,
+            "uuid": 14,
+            "name": "device default"
+        }
+    },
+    {
+        "pk": 1,
+        "model": "storages.storage",
+        "fields": {
+            "description": "Dispositivo de armazenamento utilizado pelo nimbus backup",
+            "name": "Dispositivo de armazenamento local",
+            "address": "127.0.0.1",
+            "active": true,
+            "password": "rxRfVzGV9g78uTymo1sc",
+            "uuid": 13
+        }
+    },
+    {
+        "pk": 1,
+        "model": "computers.computer",
+        "fields": {
+            "description": "nimbus",
+            "crypto_info": 1,
+            "name": "nimbus",
+            "groups": [],
+            "address": "127.0.0.1",
+            "active": false,
+            "operation_system": "unix",
+            "password": "isO1gYFdWfoZcpmj9YWo",
+            "uuid": 12
+        }
+    },
+    {
+        "pk": 1,
+        "model": "procedures.procedure",
+        "fields": {
+            "uuid": 16,
+            "schedule": 1,
+			"storage": 1,
+            "fileset": 1,
+            "computer": 1,
+			"pool_name": "Nimbus self backup",
+			"pool_size": 5242880,
+			"pool_retention_time": 30,
+            "name": "Nimbus Self Backup"
+        }
+    },
+    {
+        "pk": 1,
+        "model": "timezone.timezone",
+        "fields": {
+            "country": "BR",
+            "ntp_server": "a.ntp.br",
+            "uuid": 1,
+            "area": "America/Sao_Paulo"
+        }
+    }
+]

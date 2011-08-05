@@ -1,0 +1,6 @@
+Package: nimbus-client
+Priority: optional
+Version: 1.0
+Architecture: all
+Maintainer: Veezor
+Description: Nimbus Backup System Client 

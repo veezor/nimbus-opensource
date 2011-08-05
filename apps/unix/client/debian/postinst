@@ -1,0 +1,15 @@
+#!/bin/bash 
+
+
+
+case $1 in
+    configure)
+    for file in "/etc/nimbus /usr/bin/nimbusclientservice /etc/init.d/nimbusclient /usr/bin/nimbusnotifier";
+    do
+        chown root.root $file;
+        chmod 700 $file;
+    done;
+	/usr/sbin/update-rc.d nimbusclient defaults; 
+	/etc/init.d/nimbusclient restart ;;
+esac
+

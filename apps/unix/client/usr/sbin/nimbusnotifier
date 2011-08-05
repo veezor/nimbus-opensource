@@ -1,0 +1,93 @@
+#!/usr/bin/env python
+# -*- coding: UTF-8 -*-
+
+import sys
+import urllib
+import urllib2
+import cookielib
+import socket
+
+
+socket.setdefaulttimeout(10)
+
+
+
+class Notifier(object):
+    ADD_COMPUTER_URL = "http://%s:%d/computers/new/"
+    LOGIN_URL = "http://%s:%d/session/login/"
+
+    def __init__(self, username, password, address, port=80):
+        self.username = username
+        self.password = password
+        self.ip = address
+        self.port = int(port)
+        self.cookie = cookielib.CookieJar()
+        self.cookie_processor = urllib2.HTTPCookieProcessor(self.cookie)
+        self.urlopener = urllib2.build_opener(self.cookie_processor)
+
+
+    def get_url(self, baseurl):
+        return baseurl % ( self.ip, self.port )
+
+
+    def get_computer_data(self):
+        args = { "os" :  self.get_os() }
+        return urllib.urlencode( args.items() )
+
+
+    @property
+    def csrftoken(self):
+        handle = self.urlopener.open( self.get_url(self.LOGIN_URL) )
+        content = handle.read()
+        handle.close()
+
+        for data in self.cookie:
+            if data.name == "csrftoken":
+                return data.value
+
+
+    def get_login_data(self):
+        args = { "csrfmiddlewaretoken" :  self.csrftoken,
+                 "username" : self.username,
+                 "password" : self.password } 
+        return urllib.urlencode( args.items() )
+
+
+
+    def get_os(self):
+        if sys.platform in "win32":
+            return "windows"
+        else:
+            return "unix"
+
+
+    def login(self):
+        handle = self.urlopener.open( self.get_url(self.LOGIN_URL), 
+                                      self.get_login_data() )
+        data = handle.read()
+        handle.close()
+
+
+    def notify_new_computer(self):
+        self.login()
+        handle = self.urlopener.open( self.get_url(self.ADD_COMPUTER_URL), 
+                                      self.get_computer_data() )
+        data = handle.read()
+        handle.close()
+
+
+if __name__ == "__main__":
+    try:
+        size = len(sys.argv)
+        if size == 4:
+            username, password, address = sys.argv[1:]
+            Notifier(username, password, address).notify_new_computer()
+        elif size == 5:
+            username, password, address, port = sys.argv[1:]
+            Notifier(username, password, address, port).notify_new_computer()
+        else:
+            print "usage: username password address [port]"
+            sys.exit(1)
+        sys.exit(0)
+    except Exception, error:
+        sys.exit(1)

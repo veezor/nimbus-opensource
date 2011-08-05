@@ -1,0 +1,17 @@
+.concluido_wrapper {
+    width: 100%; border: 1px solid green;
+}
+
+.concluido_percent {
+    background: #67ca1e;
+}
+
+.request_list {
+    width: 100%;        
+}
+
+#mensagem {
+    padding: 20px;
+    margin-bottom: 20px;
+    background: #FFF2A7;
+}

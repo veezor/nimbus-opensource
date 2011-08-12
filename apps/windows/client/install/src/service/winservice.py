@@ -39,7 +39,7 @@ import win32evtlogutil
 import servicemanager
 import subprocess
 import locale
-import traceback
+import pywintypes
 
 import win32com.client
 
@@ -50,7 +50,6 @@ if win32com.client.gencache.is_readonly == True:
 
 
 import SocketServer, socket
-from glob import glob
 from time import sleep
 from SimpleXMLRPCServer import SimpleXMLRPCServer, SimpleXMLRPCRequestHandler
 
@@ -181,10 +180,13 @@ class XMLRPCservice(win32serviceutil.ServiceFramework):
 
     
 def check_firewall_conf():
-    check_firewall_app_conf("Nimbus Service for Windows Client", 
-                            'C:\\Nimbus\\pkgs\\winservice.exe')
-    check_firewall_app_conf("Nimbus Notifier for Windows Client", 
-                            'C:\\Nimbus\\pkgs\\windowsnotifier.exe')
+    try:
+        check_firewall_app_conf("Nimbus Service for Windows Client", 
+                                'C:\\Nimbus\\pkgs\\winservice.exe')
+        check_firewall_app_conf("Nimbus Notifier for Windows Client", 
+                                'C:\\Nimbus\\pkgs\\windowsnotifier.exe')
+    except pywintypes.com_error:
+        pass # firewall not initialized on boot
         
 def check_firewall_app_conf(name, imagefile):
 

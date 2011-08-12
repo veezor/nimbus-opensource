@@ -31,6 +31,7 @@
 import re
 import logging
 import time
+import subprocess
 from operator import itemgetter
 from xmlrpclib import ServerProxy
 
@@ -48,7 +49,15 @@ from nimbus.libs import systemprocesses
 from nimbus.base.models import UUIDSingletonModel as BaseModel
 
 
-DOMAIN_RE = re.compile(r"^(\w+\.)?\w+\.\w+$")
+DOMAIN_RE = re.compile(
+    r'(?:(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+[A-Z]{2,6}\.?|' #domain...
+    r'localhost|' #localhost...
+    r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})' # ...or ip
+    r'(?::\d+)?' # optional port
+    r'(?:/?|[/?]\S+)$', re.IGNORECASE)
+
+
+NTP_CHECK_SERVER = [ "/usr/sbin/ntpdate", "-q" ]
 
 EMPTY_CHOICES = [('', '----------')]
 
@@ -72,6 +81,15 @@ class Timezone(BaseModel):
     area = models.CharField('Região', max_length=255, blank=False, 
                              null=False)
 
+
+
+    def clean(self):
+        command = NTP_CHECK_SERVER + [self.ntp_server]
+        try:
+            subprocess.check_call(command, stdout = subprocess.PIPE,
+                                  stderr = subprocess.PIPE)
+        except subprocess.CalledProcessError:
+            raise ValidationError(u"Impossível sincronizar com o servidor ntp")
 
     class Meta:
         verbose_name = u"Fuso horário"

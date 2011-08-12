@@ -49,7 +49,7 @@ def generate_pem(key, certificate):
 
 
 def generate_key(filename):
-    cmd = subprocess.Popen(["openssl", "genrsa", "-out", filename, "2048"],
+    cmd = subprocess.Popen(["openssl", "genrsa", "-out", filename, "2048", "-days","3650"],
                            stdout=subprocess.PIPE)
     cmd.communicate()
 
@@ -64,6 +64,7 @@ def generate_certificate(keyfilename, filename, sslconfig):
     cmd = subprocess.Popen(["openssl", "req", "-new", 
                             "-key", keyfilename, "-x509",
                             "-config", sslconfig,
+                            "-days","3650",
                             "-out", filename],
                             stdout=subprocess.PIPE)
     cmd.communicate()

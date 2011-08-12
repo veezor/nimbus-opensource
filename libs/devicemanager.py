@@ -36,6 +36,8 @@ from subprocess import check_call, CalledProcessError
 
 PMOUNT="/usr/bin/pmount"
 PUMOUNT="/usr/bin/pumount"
+DISK_LABELS_PATH="/dev/disk/by-label"
+MOUNT_PATH_DIR="/media"
 
 
 class MountError(Exception):
@@ -45,11 +47,26 @@ class UmountError(Exception):
     pass
 
 
+
+def list_disk_labels():
+    try:
+        return os.listdir(DISK_LABELS_PATH)
+    except OSError, e:
+        return []
+
+
+def list_devices():
+    return [ StorageDeviceManager(label) for label in list_disk_labels() ]
+
+
 class StorageDeviceManager(object):
 
     def __init__(self, labelname):
         self.labelname = labelname
 
+
+    def __repr__(self):
+        return 'StorageDeviceManager(%s)' % self.labelname
 
     def _storage_info(self):
         if self.mounted:
@@ -67,16 +84,17 @@ class StorageDeviceManager(object):
         f = file("/etc/mtab")
         content = f.read()
         f.close()
-        return self.mountpoint in content
+        return self.device in content
 
     @property
     def device(self):
-        return os.path.join("/dev/disk/by-label", self.labelname)
-
+        device_label_file = os.path.join(DISK_LABELS_PATH, self.labelname)
+        link = os.readlink(device_label_file)
+        return os.path.abspath(os.path.join(DISK_LABELS_PATH, link))
 
     @property
     def mountpoint(self):
-        return os.path.join("/media", self.labelname)
+        return os.path.join(MOUNT_PATH_DIR, self.labelname)
 
 
     @property
@@ -110,7 +128,7 @@ class StorageDeviceManager(object):
     def umount(self):
         if self.mounted:
             try:
-                r = check_call([PUMOUNT, self.labelname])
+                r = check_call([PUMOUNT, self.device])
             except CalledProcessError, e:
                 raise UmountError(e)
             if r:

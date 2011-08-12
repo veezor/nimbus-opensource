@@ -142,10 +142,16 @@ class Procedure(BaseModel):
     def list_files(jobid, path, computer):
         bacula = Bacula()
 
-        if computer.operation_system == "windows" and not ':' in path:
-            path = 'C:' + path #FIX: get windows drivers from restore
+        if computer.operation_system == "windows" and path == '/':
+            files = File.objects.filter(job=jobid,
+                                       path__path__isnull=False)\
+                    .extra(select={'driver': 'substr( "path"."path", 0, 4)'})\
+                    .values_list('driver', flat=True).distinct()
+            return list(files)
 
         return bacula.list_files(jobid, path)
+
+
 
     @staticmethod
     def search_files(jobid, pattern):

@@ -57,9 +57,7 @@
                         </form>
                         {% endif %}
                         {% if comp.procedure_set.count %}
-                        <form action="/restore/{{comp.id}}/view/" method="post" class="floatright">
-                            <button type="submit" class="css3button positive" value="Restaurar">Restaurar</button>
-                        </form>
+                        <a href="/restore/step2?computer_id={{ comp.id }}" class="floatright css3button positive">Restaurar</a>
                         {% endif %}
                         <a href="/procedures/add/?comp_id={{ comp.id }}" class="floatright css3button positive">Criar Backup</a>
                         <a href="/computers/{{comp.id}}/configure/" class="css3button positive">Reconfigurar</a>

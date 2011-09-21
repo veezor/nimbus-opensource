@@ -1,0 +1,17 @@
+Computador: {{ computer.name }}
+Agendamento: {{ procedure.name }}
+Hora do agendamento: {{ job.schedule_time }}
+Início: {{  job.start_time }}
+Fim: {{ job.real_end_time }}
+Duração: {{ job.duration }}
+Dados: {{ job.human_readable_size.size }} {{ job.human_readable_size.unit }}
+Taxa de gravação: {{ rate }}
+Compressão: {{ compression }}
+Encriptação: {% if encryption == 'yes'%}sim{%else%}não{%endif%}
+Resultado: {{ job.status_message }}
+
+{%if job.human_general_status != 'ok' %}
+Mensagens para depuração:
+{{ stdin }}
+{% endif %}
+

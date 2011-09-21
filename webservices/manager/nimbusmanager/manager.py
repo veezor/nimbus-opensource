@@ -13,6 +13,7 @@ import stat
 import shutil
 import socket
 import tempfile
+import threading
 import subprocess
 from os.path import join,basename
 
@@ -166,6 +167,13 @@ class Manager(object):
         else:
             raise DaemonOperationError("Unknown operation: %s" % operation)
 
+
+
+    def network_restart(self):
+        def do():
+            self._control_daemon('networking', 'restart')
+        timer = threading.Timer(10, do)
+        timer.start()
 
    
     def __getattr__(self, attr):

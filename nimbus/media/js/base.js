@@ -41,4 +41,10 @@ $(document).ready(function(){
     $('.job_line').mouseout(function(){
         $(this).removeClass('over');
     });
+    $('#about_buttom').click(function(){
+        $.facebox(function(){
+            $.facebox({ ajax: "/base/about"});
+        });
+        return false;
+    });
 });

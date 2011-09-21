@@ -175,16 +175,23 @@ class Job(models.Model):
 
     @property
     def general_status(self):
+        status = 'undefined'
+
         if self.jobstatus in ['R', 'i', 'a']:
-            return 'running'
+            status = 'running'
         elif self.jobstatus in ['F', 'S', 'm', 'M', 's', 'j', 'c', 'd', 't', 'p', 'C']:
-            return 'waiting'
+            status = 'waiting'
         elif self.jobstatus in ['e', 'D']:
-            return 'warning'
+            status = 'warning'
         elif self.jobstatus in ['E','B', 'f','A']:
-            return 'error'
+            status = 'error'
         else:
-            return 'ok'
+            status = 'ok'
+
+        if status == 'ok' and self.joberrors> 0:
+            status = 'warning'
+
+        return status
 
 
     @property
@@ -283,16 +290,6 @@ class Job(models.Model):
 
         return self._procedure
 
-
-    @property
-    def status_friendly(self):
-        if self.jobstatus == 'T':
-            return 'ok'
-        if self.jobstatus in ('e', 'E', 'f'):
-            return 'error'
-        if self.jobstatus == 'W':
-            return 'warn'
-        return 'running'
 
     @property
     def status_message(self):

@@ -108,6 +108,11 @@ class Procedure(BaseModel):
     def all_my_jobs(self):
         jobs = Job.objects.filter(name=self.bacula_name)
         return jobs
+
+    @property
+    def all_my_good_jobs(self):
+        jobs = Job.objects.filter(name=self.bacula_name, jobstatus="T").order_by('-starttime')
+        return jobs
         
     @classmethod
     def all_jobs(cls):
@@ -115,6 +120,11 @@ class Procedure(BaseModel):
         jobs = Job.objects.select_related().filter(name__in=job_names).order_by('-starttime')
         return jobs
 
+    @classmethod
+    def all_non_self_jobs(cls):
+        job_names = [ p.bacula_name for p in cls.objects.exclude(id=1) ]
+        jobs = Job.objects.select_related().filter(name__in=job_names).order_by('-starttime')
+        return jobs
 
     def restore_jobs(self):
         return Job.objects.filter(client__name=self.computer.bacula_name,
@@ -123,7 +133,7 @@ class Procedure(BaseModel):
 
     def get_backup_jobs_between(self, start, end):
         jobs = Job.objects.filter(realendtime__range=(start,end), 
-                                  jobfiles__gt=0,
+                                  jobfiles__gt=0, 
                                   jobstatus='T',
                                   type='B',
                                   name=self.bacula_name)\
@@ -139,7 +149,9 @@ class Procedure(BaseModel):
                           client_name=self.computer.bacula_name)
    
     @staticmethod
-    def list_files(jobid, path, computer):
+    def list_files(jobid, computer, path="/"):
+        if path == "":
+            path = "/"
         bacula = Bacula()
 
         if computer.operation_system == "windows" and path == '/':

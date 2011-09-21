@@ -40,7 +40,7 @@ from django.contrib.auth.decorators import login_required
 from django.forms import widgets
 
 from nimbus.filesets.models import FileSet, FilePath
-from nimbus.computers.models import Computer
+from nimbus.computers.models import Computer, NimbusClientMessageError
 from nimbus.shared.views import render_to_response
 from nimbus.shared.forms import form_mapping, form_from_model
 from nimbus.libs.db import Session
@@ -115,9 +115,7 @@ def do_edit(request, fileset_id):
                 return HttpResponse('{"status":false,"fileset_id":"none","message":"Erro nos arquivos","error":1}')
         else:
             return HttpResponse('{"status":false,"fileset_id":"none","message":"Erro nos fileset","error":0}')
-
-
-
+    
 @login_required
 def get_tree(request):
     if request.method == "POST":
@@ -134,10 +132,12 @@ def get_tree(request):
             except Computer.DoesNotExist, error:
                 response = simplejson.dumps({"type" : "error",
                                              "message" : "Computador não existe"})
+            except NimbusClientMessageError, error:
+                response = simplejson.dumps({"type" : "error",
+                                             "message" : "Erro no cliente Nimbus."})
             return HttpResponse(response, mimetype="text/plain")
         except Exception:
             traceback.print_exc()
-
 
 @login_required
 def delete(request, fileset_id):
@@ -172,7 +172,6 @@ def do_delete(request, fileset_id):
 @login_required
 def reckless_discard(request):
     if request.method == 'POST':
-        print request.POST
         fileset_id = request.POST["fileset_id"]
         f = get_object_or_404(FileSet, pk=fileset_id)
         # not so reckless

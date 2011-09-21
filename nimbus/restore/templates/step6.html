@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block headtags %}
+<link rel="stylesheet" type="text/css" href="/media/css/veezortree.css"/>
+<link rel="stylesheet" type="text/css" href="/media/css/restore.css" />
+{% endblock %}
+
+{% block page %}
+
+<div class="block">
+
+	<div class="block_head">
+		<div class="bheadl"></div>
+		<div class="bheadr"></div>
+		<h2>{{title}}</h2>
+	</div>
+
+    <div class="block_content">
+	<h2>Passo 6: Resumo</h2><br />
+        <form action="/restore/restore_files/" id="restore_form" method="post">
+			<p>
+				<label>Computador:</label><br />
+					Nome: {{computer.name}}<br />
+					Endereço IP: {{computer.address}}<br />
+					Sistema Operacional: {{computer.operation_system|capfirst}}
+			</p>	
+			<p>
+				<label>Procedimento:</label> {{procedure.name}}<br/>
+				<label>Data do backup:</label> {{job.end_time}}<br/>
+				<label>Tipo de backup:</label> {{job.backup_level}}<br/>
+				<label>Dados armazenados em:</label> {{procedure.storage}}<br/>
+				<label>Arquivos serão restaurados em:</label> {% if destination == ""%}Seus locais de origem{% else %}{{destination}}{% endif %}
+			</p>
+			<p>
+				<label>Arquivos a restaurar:</label> {% if files|length == 1%}1 arquivo ou diretório{% else %}{{files|length}} arquivos ou diretórios{%endif%}
+				<ul id="file_list_to_restore" class="file_lists">
+					{% for file in files %}
+					{% if file|last == "/"%}<li class="directory">{{file}}{% else %}<li class="file">{{file}}{%endif%}</li>
+					{% endfor %}
+				</ul>
+			</p>
+			<input type="hidden" name="computer_id" value="{{computer.id}}"></input>
+			<input type="hidden" name="procedure_id" value="{{procedure.id}}"></input>
+			<input type="hidden" name="job_id" id="job_id" value="{{job.jobid}}"></input>
+			{% for file in files %}
+			<input type="hidden" name="paths" value="{{file}}"></input>
+			{% endfor %}
+			<input type="hidden" name="destination" value="{{destination}}"></input>
+			<div>
+				<a href="#" class="css3button negative last_step" onClick="$('#restore_form')[0].action = '/restore/step5/'; $('#restore_form')[0].submit();"><span>Voltar ao passo 5: Escolher o destino</span></a>
+				<button type="submit" class="css3button positive next_step">Restaurar</button>
+			</div>
+        </form>
+        
+        <div class="clear"></div>
+        <p></p>
+    </div>
+    
+    <div class="bendl"></div>
+	<div class="bendr"></div>
+
+</div>
+
+{% endblock %}

@@ -64,7 +64,7 @@ class ProcedureForm(forms.ModelForm):
 
 
     computer = forms.models.ModelChoiceField(label=_("Computador"),
-                                             queryset=Computer.objects.filter(id__gt=1))
+                                             queryset=Computer.objects.filter(id__gt=1).filter(active=True))
     # name = forms.CharField(initial=self.name_sugestion)
 
     pool_retention_time = forms.IntegerField(label="Tempo de retenção",

@@ -30,6 +30,7 @@
 # Create your views here.
 # -*- coding: utf-8 -*-
 
+import logging
 from functools import wraps
 
 from django.core.urlresolvers import reverse
@@ -77,6 +78,7 @@ def license(request):
 
 @only_wizard
 def network(request):
+    logger = logging.getLogger(__name__)
     extra_context = {'wizard_title': u'2 de 4 - Configuração de Rede',
                      'page_name': u'network'}
     if request.method == "GET":
@@ -96,6 +98,7 @@ def network(request):
         if interface.address == get_raw_network_interface_address():
             return redirect( "nimbus.wizard.views.timezone" )
         else:
+            logger.info('redirecting user to redirect page')
             return render_to_response(request, "redirect.html", 
                                         dict(ip_address=interface.address,
                                              url=reverse('nimbus.wizard.views.timezone')))

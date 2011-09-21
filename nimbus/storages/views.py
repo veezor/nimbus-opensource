@@ -43,7 +43,6 @@ from nimbus.procedures.models import Procedure
 from nimbus.computers.models import Computer
 from nimbus.shared.views import render_to_response
 from nimbus.shared.forms import form
-from nimbus.shared.utils import block_ie_browser
 from nimbus.bacula.models import Job
 
 @login_required

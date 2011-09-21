@@ -77,7 +77,11 @@ NIMBUS_SSLCONFIG = join(NIMBUS_ETC_DIR, "ssl.conf")
 
 
 NIMBUS_DEPLOY_PATH = join(ROOT_PATH, "var", "www")
-NIMBUS_EXE = join(NIMBUS_DEPLOY_PATH, "nimbus")
+#NIMBUS_EXE = join(NIMBUS_DEPLOY_PATH, "nimbus")
+
+#developer only
+NIMBUS_EXE = join( dirname(__file__), 'main.py')
+
 
 BACULA_LOCK_FILE = join(NIMBUS_HOME_DIR, "bacula.lock" )
 NIMBUS_GRAPHDATA_FILENAME = join(NIMBUS_HOME_DIR, "graphs.data" )
@@ -109,6 +113,7 @@ PYBACULA_TEST = True
 
 NIMBUS_UNDEPLOYED_CONF_FILES = join( dirname(__file__), 'confs')
 NIMBUS_UNDEPLOYED_LOG_CONF = join(NIMBUS_UNDEPLOYED_CONF_FILES, "logging.conf")
+NIMBUS_UNDEPLOYED_RELOAD_MANAGER_LOG_CONF = join(NIMBUS_UNDEPLOYED_CONF_FILES, "reload_manager_logging.conf")
 
 RESTORE_POINT_DEFAULT = "/tmp/bacula-restore"
 
@@ -188,6 +193,7 @@ LOGIN_URL = "/session/login"
 
 TEMPLATE_CONTEXT_PROCESSORS = (
     "nimbus.shared.contextprocessors.script_name",
+    "nimbus.shared.contextprocessors.block_ie_browser",
     "django.core.context_processors.auth",
     "django.core.context_processors.debug",
     "django.core.context_processors.i18n",
@@ -254,7 +260,7 @@ INSTALLED_APPS = (
     'nimbus.restore',
     'nimbus.system',
     'nimbus.security',
-    'south'
+    'nimbus.reports'
 )
 
 if DEBUG:

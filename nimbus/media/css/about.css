@@ -1,0 +1,15 @@
+#about {
+    border: solid 1px;
+    text-align: center;
+    background: url('/media/images/nimbus_logo_opensource.png') no-repeat 20px 20px;
+}
+#about_block {
+    width: 400px;
+    height: 300px;
+    display: table;
+}
+#about_content {
+    display: table-cell;
+    vertical-align: middle;
+    padding-top: 90px;
+}

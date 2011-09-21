@@ -51,6 +51,7 @@ urlpatterns = patterns('',
     (r'^system/', include('nimbus.system.urls')),
     (r'^filesets/', include('nimbus.filesets.urls')),
     (r'^schedules/', include('nimbus.schedules.urls')),
+    (r'^reports/', include('nimbus.reports.urls')),
     (r'^LICENSE/', 'nimbus.base.views.license'),
 )
 

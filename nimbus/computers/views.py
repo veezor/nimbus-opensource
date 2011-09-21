@@ -52,10 +52,31 @@ from nimbus.shared import enums
 from nimbus.shared.forms import form
 from nimbus.computers import forms as forms
 
+def check_my_status(request):
+    ip = request.META.get('REMOTE_ADDR', None)
+    print ip
+    computers = Computer.objects.filter(address=ip)
+    if computers:
+        computer = computers[0]
+        if computer.procedure_set.filter(active=True):
+            status = {'status': "OK", 'ip': ip, 'name': computer.name}
+            message = u"Olá %s! Seu computador está protegido! Seu IP é: %s" % (computer.name, ip)
+        elif computer.procedure_set.all():
+            status = {'status': "inactive_jobs", 'ip': ip, 'name': computer.name}
+            message = u"Olá %s! Atenção! Os procedimentos para seu computador estão desativados! Seu IP é: %s" % (computer.name, ip)
+        else:
+            status = {'status': "no_jobs", 'ip': ip, 'name': computer.name}
+            message = u"Olá %s! Atenção! Seu computador está cadastrado mas não existe nenhum backup programado! Seu IP é: %s" % (computer.name, ip)
+    else:
+        status = {'status': "ERROR", 'ip': ip, 'name': None}
+        message = "Atenção! Seu computador parece estar desprotegido!"
+    # return HttpResponse(simplejson.dumps(status))
+    return HttpResponse(message)
+
 @login_required
 def add(request):
     lforms = [ forms.ComputerForm ]
-    content = {'title':u'Adicionar Computador',
+    content = {'title':u'Ativar novo Computador',
                'forms':lforms,
                'computers':Computer.objects.filter(active=False)
               }
@@ -167,7 +188,7 @@ def view(request, object_id):
     try:
         for job in last_jobs:
             last_procedures_content.append({
-                    'type' : job.status_friendly,
+                    'type' : job.general_status,
                     'label' : job.procedure.name,
                     'date' : job.endtime,
                     'tooltip' : job.status_message,
@@ -182,7 +203,7 @@ def view(request, object_id):
     try:
         for job in errors_jobs:
             errors_procedures_content.append({
-                    'type' : job.status_friendly,
+                    'type' : job.general_status,
                     'label' : job.procedure.name,
                     'date' : job.endtime,
                     'tooltip' : job.status_message,
@@ -236,11 +257,11 @@ def activate(request, object_id):
         messages.error(request, u'Impossível ativar computador, computador inexistente')
         return redirect('nimbus.computers.views.add')
     except ComputerAlreadyActive, error:
-        messages.info(request, "O computador já esta ativo")
-        return redirect('nimbus.computers.views.list')
+        messages.error(request, "O computador já esta ativo")
+        return redirect('nimbus.computers.views.add')
     except (socket.error, xmlrpclib.Fault), error:
         messages.error(request, u'Impossível ativar computador, verifique a conexão')
-        return redirect('nimbus.computers.views.list')
+        return redirect('nimbus.computers.views.add')
     messages.success(request, u'Computador ativado com sucesso.')
     return redirect('nimbus.computers.views.list')
 

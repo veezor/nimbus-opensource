@@ -1,0 +1,21 @@
+{% block headtags %}
+<!-- <script type="text/javascript" src="/media/js/filesets.js"></script> -->
+<!-- <script type="text/javascript" src="/media/js/veezortree.js"></script> -->
+<link rel="stylesheet" type="text/css" href="/media/css/about.css"/>
+{% endblock %}
+
+{% block page %}
+<div id="about">
+	<div id="about_block">
+		<div id="about_content">
+			Versão: {{version}} revisão #{{release}}<br/>
+			Licença: <a href="/LICENSE/">GPLv3</a><br />
+			Último self-backup: {{last_backup}}<br/>
+			Computadores: {{computers}}<br />
+			Procedimentos: {{procedures}}<br />
+			Backups: {{jobs}}<br />
+		</div>
+	</div>
+	<a href="http://trynimbus.com">Nimbus Opensource</a> é uma iniciativa <a href="http://veezor.com"><img src="/media/lib/images/logo_veezor.gif" alt="Veezor® Network Intelligence" /></a>
+</div>
+{% endblock %}

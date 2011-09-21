@@ -1,0 +1,18 @@
+ul.veezortree { border: solid 1px;
+			background: #FEFCC6;
+			padding: 10px;
+		  }
+.veezortree ul {display: hidden; padding-left: 17px}
+.veezortree li {margin-top: 3px; cursor:pointer;}
+.end_path { padding-left: 26px;}
+li.directory {background: url(../icons/folder.png) no-repeat 20px;}
+li.open {background: url(../icons/folder-open.png) no-repeat 20px;}
+li.file {background: url(../icons/file_generic.png) no-repeat 20px;}
+div#wait { position: absolute;
+		   background: #CCCCCC;
+           opacity: 0.8;
+           text-align: center;
+           display: table;
+		 }
+#wait span {display: table-cell; vertical-align: middle;}
+ul {list-style: none;}

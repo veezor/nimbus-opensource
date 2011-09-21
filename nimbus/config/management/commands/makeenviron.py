@@ -70,3 +70,5 @@ class Command(BaseCommand):
  
         shutil.copy(settings.NIMBUS_UNDEPLOYED_LOG_CONF, 
                     etc_dir)
+        shutil.copy(settings.NIMBUS_UNDEPLOYED_RELOAD_MANAGER_LOG_CONF, 
+                    etc_dir)

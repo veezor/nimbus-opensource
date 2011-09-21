@@ -170,7 +170,7 @@ display: none;
 	position: relative;
 	height: 50px;
 	padding: 0 10px;
-	background: url(../images/nsp.gif) center right no-repeat;
+    background: url(../images/nsp.gif) center right no-repeat;
 	line-height: 50px;
 	}
 	
@@ -563,7 +563,8 @@ display: none;
 	border: 1px solid #d77011;
 	}
 
-.block .block_content ul {
+/*.block .block_content ul {*/
+.list ul {
 	padding-left: 15px;
 	padding-bottom: 15px;
 	}
@@ -574,13 +575,14 @@ display: none;
 	list-style-position: inside;
 	}
 
-.block .block_content ul li {
+/*.block .block_content ul li {*/
+.list li{
 	margin-bottom: 5px;
 	padding-left: 15px;
 	background: url(../images/li.gif) 0 7px no-repeat;
  	}
  	
-.block .block_content ol li {
+.list ol li {
 	margin-bottom: 5px;
 	}
 	

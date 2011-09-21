@@ -25,7 +25,6 @@ here, or even if you have any doubt about licensing, please send
 us an e-mail to law@veezor.com, claiming to include your software. */
 
 $(document).ready(function(){
-    $("input:checkbox").addClass("no-style");
     $('#filepath_template').clone().appendTo('.filepaths').show();
     
     $('.toggle').click(function(){
@@ -149,7 +148,6 @@ $(document).ready(function(){
 });
 
 function discard_unused_fileset(fileset_id) {
-    console.log(fileset_id);
     $.ajax({
         type: "POST",
         url: "/filesets/reckless_discard/",

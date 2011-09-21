@@ -257,7 +257,6 @@ function create_schedule() {
 	return status;
 }
 function discard_unused_schedule(schedule_id) {
-    console.log(schedule_id);
     $.ajax({
         type: "POST",
         url: "/schedules/reckless_discard/",

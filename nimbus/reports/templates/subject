@@ -1,0 +1,1 @@
+Relatório do Nimbus: {{ job.human_general_status.title }} - {{ procedure.name }} em {{ computer.name }}

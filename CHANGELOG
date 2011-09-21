@@ -1,0 +1,51 @@
+Date:   Tue Sep 6 08:47:46 2011 -0300
+Guia do Usuário: procedimento de instalação no Windows 2003
+
+Date:   Tue Sep 6 08:38:10 2011 -0300
+FIXED: Troca de ip do nimbus
+    
+Date:   Thu Sep 1 15:06:08 2011 -0300
+Nova versão do manual do usuário
+
+Date:   Thu Sep 1 12:08:41 2011 -0300
+Removido self-backup do histórico
+Adicionada página de status sobre o Nimbus
+
+Date:   Tue Aug 30 15:42:30 2011 -0300
+Alterado "adicionar computador" para "Ativar novo computador"
+
+Date:   Tue Aug 30 12:27:47 2011 -0300
+FIXED: Formulário de criação de backup listava computadores não-ativados
+
+Date:   Mon Aug 29 11:30:47 2011 -0300
+FIXED: Self backup emitia alerta sobre arquivos inexistentes
+
+Date:   Mon Aug 29 09:34:53 2011 -0300
+FIXED: Selecionando computador automaticamente através do botão criar backup
+
+Date:   Mon Aug 29 09:32:00 2011 -0300
+FIXED: Status do job como warning caso o bacula acuse a falta de um arquivo
+
+Date:   Tue Aug 23 09:27:07 2011 -0300
+Link para página de downloads de software clientes
+
+Date:   Mon Aug 22 13:07:42 2011 -0300
+Restore em formato de wizard
+
+Date:   Fri Aug 19 12:48:45 2011 -0300
+Sistema de notificação por email
+
+Date:   Tue Aug 16 17:00:54 2011 -0300
+Nova árvore de arquivos
+
+Date:   Thu Aug 11 15:04:09 2011 -0300
+FIXED: Verificar se o endereco do ntp_server é sincronizável
+
+Date:   Wed Aug 10 17:13:59 2011 -0300
+FIXED: Incializacao do serviço cliente nimbus no windows durante o boot
+
+Date:   Wed Aug 10 18:23:53 2011 -0300
+FIXED: Restore de múltiplas unidades no windows
+
+Date:   Wed Aug 10 17:18:04 2011 -0300
+FIXED: Restauração para local de origem

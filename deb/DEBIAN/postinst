@@ -55,6 +55,7 @@ case $1 in
 	/etc/init.d/nimbusmanager restart ;
 	/etc/init.d/nimbusclient restart ;
     su - nimbus -c '/var/www/nimbus --create-database';
+    /etc/cron.hourly/nimbus||echo;
     /etc/init.d/bacula-ctl-sd restart;
     /etc/init.d/bacula-ctl-fd restart;
     /etc/init.d/nimbus restart;

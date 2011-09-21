@@ -1,6 +1,6 @@
 Name:           NimbusClientService
-Version:        1.1
-Release:        68.1
+Version:        1.2
+Release:        69.1
 License:        GPL v2
 Summary:        Nimbus Client for Nimbus Cloud Backup
 Url:            http://www.nimbusbackup.com

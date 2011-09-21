@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block headtags %}
+<script type="text/javascript" src="/media/js/restore.js"></script>
+<script type="text/javascript" src="/media/js/veezortree.js"></script>
+<link rel="stylesheet" type="text/css" href="/media/css/veezortree.css"/>
+<link rel="stylesheet" type="text/css" href="/media/css/restore.css" />
+{% endblock %}
+
+{% block page %}
+
+<div class="block">
+
+	<div class="block_head">
+		<div class="bheadl"></div>
+		<div class="bheadr"></div>
+		<h2>{{title}}</h2>
+	</div>
+
+    <div class="block_content">
+		<h2>Passo 4: Selecionar os arquivos para restauração</h2><br />
+        <form action="/restore/step5/" id="step4_form" method="post">
+			<p>
+				<label>Computador:</label> {{computer.name}}
+			</p>
+			<p>
+				<label>Procedimento:</label> {{procedure.name}}
+			</p>
+			<p>
+				<label>Backup:</label> {{job.end_time}} - {{job.backup_level}} - {{job.jobfiles}} arquivos ({{job.human_readable_size.size}} {{job.human_readable_size.unit}})
+			</p>
+			<div>
+            	<div class="filebox searchbox">
+	                <p> 
+	    				<label>Buscar arquivo:</label> 
+	    				<input type="text" name="pattern" id="pattern"/> 
+	    				<button type="button" class="css3button positive" id="buscar_arquivos" value="Buscar">Buscar</button> 
+	    			</p>
+					<ul id="search_result_list" class="file_lists"><li class='search_result'>Arquivos:</li></ul>
+					</div>
+				<div class="filebox navigatebox">
+					<p><label>Navegar pelos arquivos:</label></p>
+					<ul class="veezortree file_lists" id="files" job="{{job.jobid}}" computer="{{computer.id}}" is_windows="{% if computer.operation_system == "windows" %}true{% else %}false{% endif %}" destination="false" restore="true"></ul>
+	                <a href="#" id="add_checked" class="css3button positive"><span>Adicionar arquivos marcados à lista</span></a>
+				</div>
+			</div>
+			<div class="clear"></div>
+			<p><label>Arquivos selecionados para restauração:</label></p>
+			<ul id="restore_file_list" class="file_lists">
+				{% for path in paths %}
+				<li class="{% if path|last == "/"%}directory{% else %}file{% endif%} selected_file" onclick="$(this).remove();"><span class="added_file">{{path}}</span></li>
+				{% endfor %}
+			</ul>
+			<input type="hidden" name="computer_id" value="{{computer.id}}"></input>
+			<input type="hidden" name="procedure_id" value="{{procedure.id}}"></input>
+			<input type="hidden" name="job_id" id="job_id" value="{{job.jobid}}"></input>
+			<div>
+				<a href="#" class="css3button positive last_step" onClick="$('#step4_form')[0].action = '/restore/step3/'; $('#step4_form')[0].submit();"><span>Passo 3: Escolher Backup</span></a>
+				<a href="#" id="submit_files" class="css3button positive next_step"><span>Passo 5: Escolher local para restauração</span></a>
+			</div>
+		</form>
+        
+        <div class="clear"></div>
+        <p></p>
+    </div>
+    
+    <div class="bendl"></div>
+	<div class="bendr"></div>
+
+</div>
+
+{% endblock %}

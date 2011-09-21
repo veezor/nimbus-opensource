@@ -31,7 +31,7 @@
 
 from os.path import join, dirname
 
-DEBUG = True
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 AJAX_DEBUG = DEBUG
 
@@ -109,6 +109,7 @@ PYBACULA_TEST = False
 
 NIMBUS_UNDEPLOYED_CONF_FILES = join( dirname(__file__), 'confs')
 NIMBUS_UNDEPLOYED_LOG_CONF = join(NIMBUS_UNDEPLOYED_CONF_FILES, "logging.conf")
+NIMBUS_UNDEPLOYED_RELOAD_MANAGER_LOG_CONF = join(NIMBUS_UNDEPLOYED_CONF_FILES, "reload_manager_logging.conf")
 
 RESTORE_POINT_DEFAULT = "/tmp/bacula-restore"
 
@@ -184,6 +185,7 @@ LOGIN_URL = "/session/login"
 
 TEMPLATE_CONTEXT_PROCESSORS = (
     "nimbus.shared.contextprocessors.script_name",
+    "nimbus.shared.contextprocessors.block_ie_browser",
     "django.core.context_processors.auth",
     "django.core.context_processors.debug",
     "django.core.context_processors.i18n",
@@ -247,6 +249,7 @@ INSTALLED_APPS = (
     'nimbus.restore',
     'nimbus.system',
     'nimbus.security',
+    'nimbus.reports'
 )
 
 if DEBUG:

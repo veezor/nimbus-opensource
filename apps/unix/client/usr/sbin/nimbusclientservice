@@ -40,18 +40,37 @@ class NimbusService(object):
 
 
     def save_keys(self, keypar, masterkey):
-        with file(KEYPAR, "w") as f:
-            f.write(keypar)
+        try:
+            f = file(KEYPAR, "w")
+            try:
+                f.write(keypar)
+            finally:
+                f.close()
+        except IOError, error:
+            raise
 
-        with file(MASTERKEY, "w") as f:
-            f.write(masterkey)
+        try:
+            f = file(MASTERKEY, "w")
+            try:
+                f.write(masterkey)
+            finally:
+                f.close()
+        except IOError, error:
+            raise
 
         return True
         
 
     def save_config(self, config):
-        with codecs.open(FDCONF, "w", "utf-8") as f:
-            f.write(config)
+        try:
+            f = codecs.open(FDCONF, "w", "utf-8")
+            try:
+                f.write(config)
+            finally:
+                f.close()
+        except IOError, error:
+            raise
+
         return True
 
 

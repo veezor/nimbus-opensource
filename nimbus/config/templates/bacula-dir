@@ -4,7 +4,7 @@ Director {
 	Maximum Concurrent Jobs = 99
 	WorkingDirectory = "/var/bacula/working"
 	DIRport = 9101
-	Messages = Daemon
+	Messages = Standard
 	PidDirectory = "/var/run"
 	QueryFile = "/etc/bacula/query.sql"
 	FD Connect Timeout = 30 seconds
@@ -23,13 +23,13 @@ Messages {
 	console = all, !skipped, !saved
 	Name = Standard
 	append = "/var/bacula/working/log" = all, !skipped
+    mailcommand = "/var/www/nimbus --email-report %i" 
+    operatorcommand = "/var/www/nimbus --email-report %i" 
+    mail = nimbus@veezor.com = info
+    operator = nimbus@veezor.com = mount
 }
 
-Messages {
-	console = all, !skipped, !saved
-	Name = Daemon
-	append = "/var/bacula/working/log" = all, !skipped
-}
+
 
 @|"sh -c 'for f in {{ computers_dir }}/* ; do echo @${f} ; done'"
 @|"sh -c 'for f in {{ filesets_dir }}/* ; do echo @${f} ; done'"

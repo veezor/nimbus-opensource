@@ -31,6 +31,7 @@
 import os
 import sys
 import getpass
+import threading # FIX KeyError
 
 
 sys.path.extend( ['/var/nimbus/deps/',
@@ -52,6 +53,7 @@ from django.contrib.auth.models import User
 from django.conf import settings
 
 from nimbus.libs import graphsdata
+from nimbus.libs import migrations
 from nimbus.shared import utils
 from nimbus.libs.bacula import ( ReloadManager,
                                  ReloadManagerService,
@@ -60,6 +62,7 @@ from nimbus.config.models import Config
 from nimbus.storages.models import Storage
 from nimbus.computers.models import Computer
 from nimbus.shared.middlewares import LogSetup
+from nimbus.reports.models import send_email_report
 from nimbus.security.models import register_administrative_nimbus_models
 
 
@@ -148,6 +151,17 @@ class App(object):
         service = ReloadManagerService()
         service.run()
 
+    def send_email_report(self):
+        job_id =  int(sys.argv[2])
+        send_email_report(job_id)
+
+
+    def update_10_to_11(self):
+        try:
+            migrations.update_10_to_11()
+        except migrations.ComputerUpdateError:
+            print "Erro: todos os clientes devem estar ativos na rede"
+            sys.exit(1)
 
     def run(self):
         commands = {
@@ -156,14 +170,16 @@ class App(object):
             "--create-database" : self.create_database,
             "--shell" : self.shell,
             "--change-password" : self.change_password,
-            "--start-reload-manager-service" : self.reload_manager_service
+            "--start-reload-manager-service" : self.reload_manager_service,
+            "--email-report": self.send_email_report,
+            "--update-1.0-to-1.1" : self.update_10_to_11
         }
 
         if len(sys.argv) > 1:
             try:
                 commands[sys.argv[1]]()
             except KeyError, error:
-                print "option not found"
+                print "option not found:",sys.argv[1]
                 sys.exit(1)
         else:
             self.run_server()

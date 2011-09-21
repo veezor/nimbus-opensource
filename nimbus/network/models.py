@@ -40,7 +40,7 @@ from django.conf import settings
 from django.core.exceptions import ValidationError
 
 from nimbus.shared import signals
-from nimbus.libs import systemprocesses, bacula
+from nimbus.libs import bacula
 from nimbus.base.models import UUIDSingletonModel as BaseModel
 # TODO:
 # Config importado em update_director_address() e get_nimbus_address()
@@ -102,10 +102,12 @@ class NetworkInterface(BaseModel):
 
 
 def update_networks_file(interface):
-    def callable(interface):
+    logger = logging.getLogger(__name__)
+
+    if interface.address != get_raw_network_interface_address():
         try:
-            time.sleep(10) # for redirect page
             server = ServerProxy(settings.NIMBUS_MANAGER_URL)
+            logger.info('gerando configuracao de interfaces de rede')
             server.generate_interfaces("eth0", 
                                        interface.address, 
                                        interface.netmask, 
@@ -113,16 +115,17 @@ def update_networks_file(interface):
                                        interface.broadcast, 
                                        interface.network, 
                                        interface.gateway)
+            logger.info('gerando configuracao de dns')
             server.generate_dns(interface.dns1, 
                                  interface.dns2)
+            logger.info('restarting network right now')
             server.network_restart()
+            logger.info('restarting network exited')
         except Exception, error:
             logger = logging.getLogger(__name__)
             logger.exception("Conexao com nimbus-manager falhou")
 
-    if interface.address != get_raw_network_interface_address():
-        systemprocesses.norm_priority_job("Generate network conf files and restart networking", 
-                                         callable, interface)
+    logger.info('retornando do signal que troca o ip')
 
 
 def update_director_address(interface):

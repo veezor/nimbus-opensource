@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block headtags %}
+<script type="text/javascript" src="/media/js/veezortree.js"></script>
+<link rel="stylesheet" type="text/css" href="/media/css/veezortree.css"/>
+<link rel="stylesheet" type="text/css" href="/media/css/restore.css" />
+{% endblock %}
+
+{% block page %}
+
+<div class="block">
+
+	<div class="block_head">
+		<div class="bheadl"></div>
+		<div class="bheadr"></div>
+		<h2>{{title}}</h2>
+	</div>
+
+    <div class="block_content">
+	<h2>Passo 5: Selecionar o local de destino dos arquivos</h2><br />
+        <form action="/restore/step6/" id="step5_form" method="post">
+			<p>
+				<label>Computador:</label> {{computer.name}}
+			</p>	
+			<p>
+				<label>Procedimento:</label> {{procedure.name}}
+			</p>
+			<p>
+				<label>Backup:</label> {{job.end_time}} - {{job.backup_level}} - {{job.jobfiles}} arquivos ({{job.human_readable_size.size}} {{job.human_readable_size.unit}})
+			</p>
+			<p>
+				<label>Arquivos a restaurar:</label> {{files|length}} arquivos
+			</p>
+			<p>
+                <label for="job_id">Selecione o destino dos arquivos:</label>
+				<ul class="veezortree" id="destination" restore="false" destination="true" job="{{job.jobid}}" computer="{{computer.id}}" is_windows="{% if computer.operation_system == "windows" %}true{% else %}false{% endif %}">
+					<li>
+						<input type="radio" checked="true" name="destination_restore_path" value="" class="full_path">
+						<span>Restaurar arquivos em seus locais de origem</span>
+					</li>
+				</ul>
+            </p>
+			<input type="hidden" name="computer_id" value="{{computer.id}}"></input>
+			<input type="hidden" name="procedure_id" value="{{procedure.id}}"></input>
+			<input type="hidden" name="job_id" id="job_id" value="{{job.jobid}}"></input>
+			{% for file in files %}
+			<input type="hidden" name="paths" value="{{file}}"></input>
+			{% endfor %}
+			<div>
+				<a href="#" class="css3button negative last_step" onClick="$('#step5_form')[0].action = '/restore/step4/'; $('#step5_form')[0].submit();"><span>Voltar ao passo 4: Escolher os arquivos</span></a>
+				<button type="submit" class="css3button positive next_step">Passo 6 - Resumo</button>
+			</div>
+        </form>
+        
+        <div class="clear"></div>
+        <p></p>
+    </div>
+    
+    <div class="bendl"></div>
+	<div class="bendr"></div>
+
+</div>
+
+{% endblock %}

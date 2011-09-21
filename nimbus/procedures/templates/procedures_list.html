@@ -46,9 +46,9 @@
                         </form>
                         {% endif %}
                     </div>
-                    <h4>CONFIGURAÇÕES DO PROCEDIMENTO</h4>
-                    <div class="procedure-config">
-                        <div style="width: 69%; float: left;">
+                    <h4>{% if not procedure.active %}PROCEDIMENTO DESATIVADO{% else %}CONFIGURAÇÕES DO PROCEDIMENTO{% endif %}</h4>
+                    <div class="procedure-config {% if not procedure.active %}inactive{% endif %}">
+                        <div>
                             Conjunto de arquivos: <strong>{{procedure.fileset.name}}</strong>
 							{% if procedure.fileset.is_model %}
 								[Perfil]
@@ -60,16 +60,6 @@
 							{% endif %}
 							<br/>
                             Tempo de retenção dos arquivos: <strong>{{procedure.pool_retention_time}}</strong>
-                        </div>
-                        <div style="width: 29%; float: right;">
-                            &nbsp;
-                            <!-- Use this div to display any content you need to. The following images are just for testing.
-<img src="/media/icons/exchange32.png" alt="Running" />
-                            <img src="/media/icons/check32.png" alt="Check" />
-                            <img src="/media/icons/stop32.png" alt="Stop" />
-                            <img src="/media/icons/sleep32.png" alt="Sleep" />
-                            <img src="/media/icons/warning32.png" alt="Warn" />
--->
                         </div>
                         <div class="clear"></div>
                     </div>

@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block headtags %}
+<link rel="stylesheet" type="text/css" href="/media/css/restore.css" />
+{% endblock %}
+
+{% block page %}
+
+<div class="block">
+
+	<div class="block_head">
+		<div class="bheadl"></div>
+		<div class="bheadr"></div>
+		<h2>{{title}}</h2>
+	</div>
+
+    <div class="block_content">
+	<h2>Passo 1: Selecionar o computador</h2><br />
+        <form action="/restore/step2/" id="step1_form" method="post">
+			<p>
+                <label for="computer_id">Selecione o computador:</label>
+                <select name="computer_id" id="computer_id" >
+                    <option value=""> - Selecione - </option>
+                    {% for computer in computers %}
+                    <option value="{{computer.id}}">{{computer.name}}</option>
+                    {% endfor %}
+                </select>
+            </p>
+			<div>
+				<button type="submit" class="css3button positive next_step" onClick="if ($('#step1_form')[0].computer_id.value == '') {alert('Nenhum computador foi selecionado'); return false}">Passo 2 - Escolher o procedimento</button>
+			</div>
+        </form>
+        
+        <div class="clear"></div>
+        <p></p>
+    </div>
+    
+    <div class="bendl"></div>
+	<div class="bendr"></div>
+
+</div>
+
+{% endblock %}

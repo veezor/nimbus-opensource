@@ -45,13 +45,14 @@
 }
 
 .procedure-config {
-    background: #FFF;
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
     border: 1px solid #CCC;
     padding: 10px;
 }
-
+div.inactive {
+    background: #FDD;
+}
 .profile {
     padding: 20px;
     -moz-border-radius: 5px;
@@ -88,7 +89,9 @@
     padding: 10px;
     border: 1px solid #CCC;
 }
-
+div.inactive {
+    background: #FDD;
+}
 .fileset {
     border: 2px solid #67c7a1;
     padding: 0;

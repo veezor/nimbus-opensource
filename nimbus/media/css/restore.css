@@ -1,46 +1,22 @@
-h2.titulo_step {
-    -moz-border-radius-topleft: 5px;
-    -moz-border-radius-topright: 5px;
-    -webkit-border-top-left-radius: 5px;
-    -webkit-border-top-right-radius: 5px;
-    background: #EEE;
-    border-bottom: 4px solid #E9E9E9;
-    margin-top: 30px;
-    padding: 15px;
-}
-
-.computer {
-    padding: 20px;
-    -moz-border-radius: 5px;
-    -webkit-border-radius: 5px;
-    background: #EEE;
-    margin-bottom: 20px;
-}
-
-.computer .left {
-    float: left; width: 250px;
-}
-
-.computer .right {
-    float: right; width: 600px;
-}
-
-.computer img {
-    float: left; height: 32px; padding-right: 10px;
-}
-
-.name {
-    margin: 0 0 -5px 0; padding: 0;
-}
-
-.description {
-    font-size: 10px; margin: 0; line-height: 1.4em;
-}
-
-#jobs_list { width: 600px; }
-
-.tree_computer {
-    margin-bottom: 20px;
-}
-
-#data_inicio, #data_fim{width: 180px;}
+ul.file_lists { border: solid 1px;
+				background: #FEFCC6;
+				padding: 10px;
+				height: 200px;
+				overflow: auto;
+				white-space: nowrap;}
+span.listed_file {background: url("/media/icons/40.png") no-repeat;
+				  padding-left: 40px;}
+span.added_file {background: url("/media/icons/41.png") no-repeat;
+				  padding-left: 40px;}
+div.filebox {position: relative;
+			 width: 48%;
+			 margin-bottom: 10px;}
+.file_lists li {cursor:pointer;}
+div.searchbox {float: right;}
+div.navigatebox {float: left;}
+input#pattern {width: 260px;
+			   font-size: 13px;}
+.filebox p {height: 30px;}
+.next_step {float: right;}
+.last_step {float: left;}
+#file_list_to_restore li {padding-left: 40px;}

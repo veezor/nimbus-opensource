@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block headtags %}
+<link rel="stylesheet" type="text/css" href="/media/css/restore.css" />
+{% endblock %}
+
+{% block page %}
+
+<div class="block">
+
+	<div class="block_head">
+		<div class="bheadl"></div>
+		<div class="bheadr"></div>
+		<h2>{{title}}</h2>
+	</div>
+
+    <div class="block_content">
+	<h2>Passo 3: Selecionar o backup</h2><br />
+        <form action="/restore/step4/" id="step3_form" method="post">
+			<p>
+				<label>Computador:</label> {{computer.name}}
+			</p>	
+			<p>
+				<label>Procedimento:</label> {{procedure.name}}
+			</p>
+			<p>
+				<label>Data inicial:</label> 
+				<input type="text" class="date_picker" name="start_date" value="{{start_date}}" />
+				<label>Data final:</label> 
+				<input type="text" class="date_picker" name="end_date" value="{{end_date}}" />
+				<a href="#" class="css3button positive" onClick="$('#step3_form')[0].action = '/restore/step3/'; $('#step3_form')[0].submit();"><span>Filtrar</span></a>
+			</p>
+			<p>
+                <label for="job_id">Selecione o backup a ser restaurado:</label>
+                <select name="job_id" id="job_id" >
+					{% if jobs|length == 0%}
+					<option value=""> Não há nenhum backup para este computador e procedimento neste período</option>
+					{% else %}
+                    <option value=""> - Selecione - </option>
+                    {% for job in jobs %}
+                    <option value="{{job.jobid}}">{{job.end_time}} - {{job.backup_level}} - {{job.jobfiles}} arquivos ({{job.human_readable_size.size}} {{job.human_readable_size.unit}})</option>
+                    {% endfor %}
+					{% endif %}
+                </select>
+            </p>
+			<input type="hidden" name="computer_id" value="{{computer.id}}"></input>
+			<input type="hidden" name="procedure_id" value="{{procedure.id}}"></input>
+			<div>
+				<a href="#" class="css3button negative last_step" onClick="$('#step3_form')[0].action = '/restore/step2/'; $('#step3_form')[0].submit();"><span>Voltar ao passo 2: Escolher o procedimento</span></a>
+				<button type="submit" class="css3button positive next_step" onClick="if ($('#step3_form')[0].job_id.value == '') {alert('Nenhum backup foi selecionado'); return false}">Passo 4 - Escolher os arquivos</button>
+			</div>
+        </form>
+        
+        <div class="clear"></div>
+        <p></p>
+    </div>
+    
+    <div class="bendl"></div>
+	<div class="bendr"></div>
+
+</div>
+
+{% endblock %}

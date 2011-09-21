@@ -1,7 +1,7 @@
 {% block headtags %}
-<link rel="stylesheet" type="text/css" href="/media/css/filesets.css" media="screen" />
 <script type="text/javascript" src="/media/js/filesets.js"></script>
-<script type="text/javascript" src="/media/lib/js/tree_plugin.js"></script>
+<script type="text/javascript" src="/media/js/veezortree.js"></script>
+<link rel="stylesheet" type="text/css" href="/media/css/veezortree.css"/>
 {% endblock %}
 
 {% block page %}
@@ -13,11 +13,11 @@
 	</div>		<!-- .block_head ends -->
 	<div class="block_content">
         <form action="/filesets/do_add/" method="post" id="main_form">
+			<ul id="arvore1" class="veezortree" restore="false" destination="false" computer="{{computer.id}}" is_windows="{% if computer.operation_system == "windows" %}true{% else %}false{% endif %}"></ul>
 			<input type="hidden" name="files-TOTAL_FORMS" value="0" id="id_files-TOTAL_FORMS">
 			<input type="hidden" name="files-INITIAL_FORMS" value="0" id="id_files-INITIAL_FORMS">
 			<input type="hidden" name="files-MAX_NUM_FORMS" id="id_files-MAX_NUM_FORMS">
 			<input type="hidden" value="{{ computer.id }}" id="computer_id" />
-			<ul class="tree"><li class="directory first"><span><a href="#" path="/">Arquivos</a></span></li></ul>
 			<hr />
 			<span id="field_error_0" class="field_error" style="display: none;">Preencha os campos abaixo corretamente<br/></span>
 			<p {% if hide_name %}class="hidden"{% endif %}>

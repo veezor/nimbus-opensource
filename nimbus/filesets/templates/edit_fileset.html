@@ -1,12 +1,7 @@
-
-
 {% block headtags %}
-<link rel="stylesheet" type="text/css" href="/media/css/filesets.css" media="screen" />
-<script type="text/javascript" src="/media/lib/js/tree_plugin.js"></script>
 <script type="text/javascript" src="/media/js/filesets.js"></script>
-<!-- <script type="text/javascript">
-	NOT_ASYNC = true;
-</script> -->
+<script type="text/javascript" src="/media/js/veezortree.js"></script>
+<link rel="stylesheet" type="text/css" href="/media/css/veezortree.css"/>
 {% endblock %}
 
 {% block page %}
@@ -32,7 +27,7 @@
 		    </div>
             <hr />
 			<h2>Adicionar novos aquivos:</h2>
-			<ul class="tree"><li class="directory first"><span><a href="#" path="/">Arquivos</a></span></li></ul>
+			<ul id="arvore1" class="veezortree" restore="false" destination="false" computer="{{computer.id}}" is_windows="{% if computer.operation_system == "windows" %}true{% else %}false{% endif %}"></ul>
 			<p>
 			<label>{{fileset_form.name.label}}: </label>{{ fileset_form.name }}
 			</p>
@@ -41,7 +36,6 @@
 			</p>
 			<hr />
 			<p>
-				<!-- <input type="submit" class="submit mid" id="submit_button" value="Salvar"/> -->
                 <button type="button" class="css3button" id="submit_button" value="Salvar">Salvar</button>
             </p>
         </form>

@@ -147,12 +147,12 @@ $(document).ready(function(){
 	
 	
 	// Style file input
-	jQuery("input[type=file]").filestyle({ 
-	    image: "/media/lib/images/upload.gif",
-	    imageheight : 30,
-	    imagewidth : 80,
-	    width : 250
-	});
+    // jQuery("input[type=file]").filestyle({ 
+    //     image: "/media/lib/images/upload.gif",
+    //     imageheight : 30,
+    //     imagewidth : 80,
+    //     width : 250
+    // });
 	
 	
 	// File upload
@@ -227,15 +227,12 @@ $(document).ready(function(){
 		setTimeout(update_time, 1000);
 	}
 	
-	//$(':checkbox').iphoneStyle({ checkedLabel: 'Sim', uncheckedLabel: 'Não' });
-	$('input:checkbox:not(:checkbox.schedule):not(input:checkbox.no-style):not(input:checkbox.fileset):not(.tree input:checkbox)').not('').iphoneStyle({ checkedLabel: 'Sim', uncheckedLabel: 'Não' });
 	$('.filetree').each(function(){
 		var script = $(this).attr("ref");
 		$(this).fileTree({ root: '/media/lib/demo/', script: script }, function(file) { 
 			alert(file);
 		});
 	})
-	// $(".sparklines").sparkline('html', {width: "300", height: "150px" });
 	
 	var actual_time_html = $('#actual_time').html();
     if (actual_time_html != null) {

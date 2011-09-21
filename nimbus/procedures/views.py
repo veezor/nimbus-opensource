@@ -48,7 +48,6 @@ from nimbus.computers.models import Computer
 from nimbus.storages.models import Storage
 from nimbus.schedules.models import Schedule
 from nimbus.filesets.models import FileSet
-#from nimbus.pools.models import Pool
 from nimbus.shared.views import render_to_response
 from nimbus.shared.forms import form, form_mapping
 from nimbus.shared.enums import days as days_enum, weekdays as weekdays_enum, levels as levels_enum
@@ -58,14 +57,21 @@ from nimbus.schedules.models import Schedule
 
 @login_required
 def add(request, teste=None):
-    comp_id = 0
-    if request.GET:
-        comp_id = request.GET["comp_id"]
+
+    initial = {}
+    if request.method == "GET":
+        computer = request.GET.get("comp_id", 0)
+
+        if computer:
+            initial = {"computer" : computer}
+        else:
+            initial = {}
+
     title = u"Adicionar backup"
-    form = ProcedureForm(prefix="procedure")
+    form = ProcedureForm(initial=initial, prefix="procedure")
+
     content = {'title': title,
-                'form':form,
-                'comp_id': comp_id}
+                'form':form}
     if request.method == "POST":
         data = copy(request.POST)
         if data["procedure-fileset"]:
@@ -153,7 +159,7 @@ def execute(request, object_id):
 def list_all(request):
     procedures = Procedure.objects.filter(id__gt=1)
     title = u"Procedimentos de backup"
-    last_jobs = Procedure.all_jobs()[:10]
+    last_jobs = Procedure.all_non_self_jobs()[:10]
     return render_to_response(request, "procedures_list.html", locals())
 
 
@@ -187,19 +193,6 @@ def profile_list(request):
                'computers': computers}
     return render_to_response(request, "profile_list.html", content)
 
-# @login_required
-# def profile_delete(request, object_id):
-#     profile = get_object_or_404(Profile, pk=object_id)
-#     if request.method == "POST":
-#         n_procedures = Procedure.objects.filter(profile=profile).count()
-#         if n_procedures:
-#             messages.error(request, u"Impossível remover perfil em uso")
-#         else:
-#             profile.delete()
-#             messages.success(request, u"Procedimento removido com sucesso.")
-#             return redirect('nimbus.procedures.views.profile_list')
-#     remove_name = profile.name
-#     return render_to_response(request, 'remove.html', locals())
     
 @login_required
 def history(request, object_id=False):
@@ -211,7 +204,7 @@ def history(request, object_id=False):
     except ValueError:
         page = 1
     #get all jobs
-    all_jobs = Procedure.all_jobs()
+    all_jobs = Procedure.all_non_self_jobs()
     paginator = Paginator(all_jobs, 20)
     try:
         jobs = paginator.page(page)

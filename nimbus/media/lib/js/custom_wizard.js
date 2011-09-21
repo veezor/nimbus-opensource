@@ -190,15 +190,10 @@ $(document).ready(function(){
 	jQuery(document).pngFix();
 
 
-	$('input:checkbox:not(#schedule input:checkbox):not(#fileset input:checkbox):not(.tree input:checkbox)').not('').iphoneStyle({ checkedLabel: 'Sim', uncheckedLabel: 'Não' });
 	$('.filetree').each(function(){
 		var script = $(this).attr("ref");
 		$(this).fileTree({ root: '/media/lib/demo/', script: script }, function(file) {
 			alert(file);
 		});
 	})
-	//$(".iPhoneCheckContainer").css("width", "85px");
-	// $(".sparklines").sparkline('html', {width: "300", height: "150px" });
-	
-
 });

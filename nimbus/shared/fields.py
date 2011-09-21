@@ -39,6 +39,22 @@ path_re = re.compile('^([a-zA-Z]:)?/([a-zA-Z0-9 .@_-]+/?)*$')
 NAME_RE = re.compile("^[\w\s]{4,255}$")
 
 
+
+DOMAIN_RE = re.compile(
+    r'(?:(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+[A-Z]{2,6}\.?|' #domain...
+    r'localhost|' #localhost...
+    r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})' # ...or ip
+    r'(?::\d+)?' # optional port
+    r'(?:/?|[/?]\S+)$', re.IGNORECASE)
+
+
+def check_domain(value):
+    if not DOMAIN_RE.match(value):
+        raise ValidationError("must be a domain")
+
+
+
+
 def check_model_name(value):
     if not NAME_RE.match(value):
         raise ValidationError("O campo deve conter apenas caracteres alfa-numéricos e espaços. O limite mínimo de caracteres é 4.")
